@@ -1,3 +1,19 @@
+:root {
+    /* these will get modified by Recolors.js */
+    --spriteTime: 0s;
+    --spriteCount: 0;
+    --spriteMove: 0px;
+}
+
+@font-face {
+    font-family: "RoA-Med";
+    src: url('Resources/Fonts/roa_med_round_jp2.ttf');
+}
+@font-face {
+    font-family: "RoA-Bold";
+    src: url('Resources/Fonts/roa-m-bold-loc6.ttf');
+}
+
 /* remove some default styles */
 html, body {
     padding: 0;
@@ -19,4 +35,92 @@ button {
 }
 button, [type="button"] {
     -webkit-appearance: button;
+}
+
+
+html {
+    background-color: grey;
+    image-rendering: pixelated; /* Chromium */
+    image-rendering: crisp-edges; /* Firefox */
+    font-family: 'RoA-Bold';
+}
+
+
+#midRegion {
+    display: flex;
+}
+
+#midLeft {
+    display: flex;
+}
+
+#animDiv {
+    overflow: hidden;
+}
+#animCanvas {
+    position: relative;
+    left: 0;
+    animation: moveSprite var(--spriteTime) steps(var(--spriteCount)) infinite;
+}
+@keyframes moveSprite {
+    100% { transform: translateX(var(--spriteMove)) }
+}
+
+
+#midRight {
+    display: flex;
+    flex-direction: column;
+}
+
+.part {
+    cursor: pointer;
+    display: flex;
+}
+
+
+
+#sliderRegion {
+    display: flex;
+    flex-direction: column;
+}
+.slider {
+    -webkit-appearance: none;
+    width: 175px;
+    height: 8px;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2.5px solid var(--bg);
+    margin: 4px;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 8px;
+    height: 20px;
+    border-radius: 5px;
+    background: lightgray;
+    cursor: pointer;
+}
+.slider::-moz-range-thumb {
+    width: 8px;
+    height: 20px;
+    background: lightgray;
+    cursor: pointer;
+}
+#sliderHue {
+    background: linear-gradient(to right, red, #ff0, lime, cyan, blue, #f0f, red);
+}
+
+.sliderRGB {
+    display: none;
+}
+#sliderR {
+    background: linear-gradient(to right, black, red);
+}
+#sliderG {
+    background: linear-gradient(to right, black, green);
+}
+#sliderB {
+    background: linear-gradient(to right, black, blue);
 }

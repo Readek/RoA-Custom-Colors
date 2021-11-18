@@ -2,6 +2,16 @@
 
 // this script is a modified version of https://github.com/Readek/RoA-Skin-Recolorer/blob/main/RoA%20WebGL%20Shader.js
 
+/* 
+    colorIn         // original color, array of 4 [rgba] values for each color
+    colorOut        // desired color, same as above
+    colorTolerance  // color range, array of 4 [hsva] values for each color
+    blend           // color distance relative to original value, array of 4 values for each color
+        
+    // arrays need to have their values on a single array,
+    // the GLSL shader will then separate them every 4 values
+*/
+
 const vertexShaderSource = `#version 300 es
 
 // the vertex shader RoA uses is much more complicated, but here we
@@ -164,15 +174,6 @@ void main() {
 }
 `;
 
-/* 
-    colorIn         // original color, array of 4 [rgba] values for each color
-    colorOut        // desired color, same as above
-    colorTolerance  // color range, array of 4 [hsva] values
-        
-    // arrays need to have their values on a single array,
-    // the GLSL shader will then separate them every 4 values
-*/
-
 
 testGL() // test if the user is actually able to do this
 function testGL() {
@@ -185,34 +186,16 @@ function testGL() {
 // time to create our recolored character!
 class RoaRecolor {
 
-  constructor(ogColor, colorTolerance, blend = null) {
+  constructor(ogColor, colorTolerance, blend) {
     this.colorIn = ogColor;
     this.colorTolerance = colorTolerance;
 
+    // this is a variable that the shader uses for Early Access colors
+    // the game will also use this value for some character's parts
+    this.blend = blend;
+
     //this will store whatever images you want to add in
     this.charImgs = {};
-
-    // this is a variable that the shader will use for Early Access colors
-    // the game will also use this value for some character's parts
-    // if 0, the color will have no shading
-    this.blend = [];
-    if (char.name == "Absa" || char.name == "Kragg") {
-      for (let i = 0; i < ogColor.length; i++) {
-        if (i < 4) {
-          this.blend.push(1.2);
-        } else {
-          this.blend.push(1);
-        }
-      }
-    } else {
-      for (let i = 0; i < ogColor.length; i++) {
-        if (blend) {
-          this.blend.push(0);
-        } else {
-          this.blend.push(1);
-        }
-      }
-    }
   }
 
 
@@ -365,22 +348,6 @@ class RoaRecolor {
   // we need to repaint the image to get a screenshot of it before it internaly clears
   download(colorOut, name) {
     render(this.charImgs[name], colorOut ? colorOut : this.colorIn, name);
-  }
-
-  // to hot-change retro shading
-  changeBlend(oneOrZero) {
-    for (let key in this.charImgs) {
-      const gl = this.charImgs[key].gl;
-      this.blend = [];
-      for (let i = 0; i < this.colorIn.length; i++) {
-        if (oneOrZero) {
-          this.blend.push(1);
-        } else {
-          this.blend.push(0);
-        }        
-      }
-      gl.uniform4fv(this.charImgs[key].blendLoc, this.blend);
-    }
   }
   
 }

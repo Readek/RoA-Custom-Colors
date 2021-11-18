@@ -11,7 +11,120 @@
 </head>
 
 <body>
+
+    <div id="topRegion">
+
+    </div>
+
+    <div id="midRegion">
+
+        <div id="midLeft">
+            <div id="pContainer">
+                <canvas id="portCanvas" title="To download, press the download button"></canvas>
+            </div>
+        
+            <div id="sContainer" class="hideCustom">
+                <div id="animDiv">
+                    <canvas id="animCanvas" title="To download, press the download button down below"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div id="midRight">
+            <div>
+                <button id="backBut">Back</button>
+                <span id="charName">Character</span>
+                <button id="forwardBut">Forward</button>
+            </div>
     
-<h1>Hola mundo</h1>
+            <div id="partList">
+                <div class="part" num="0">
+                    <span class="partName"></span>
+                    <div class="colorRect">
+                        <span class="colorValues">250, 145, 178</span>
+                    </div>
+                </div>
+                <div class="part" num="1">
+                    <span class="partName"></span>
+                    <div class="colorRect">
+                        <span class="colorValues">250, 145, 178</span>
+                    </div>
+                </div>
+                <div class="part" num="2">
+                    <span class="partName"></span>
+                    <div class="colorRect">
+                        <span class="colorValues">250, 145, 178</span>
+                    </div>
+                </div>
+                <div class="part" num="3">
+                    <span class="partName"></span>
+                    <div class="colorRect">
+                        <span class="colorValues">250, 145, 178</span>
+                    </div>
+                </div>
+                <div class="part" num="4">
+                    <span class="partName"></span>
+                    <div class="colorRect">
+                        <span class="colorValues">250, 145, 178</span>
+                    </div>
+                </div>
+                <div class="part" num="5">
+                    <span class="partName"></span>
+                    <div class="colorRect">
+                        <span class="colorValues">250, 145, 178</span>
+                    </div>
+                </div>
+                <div class="part" num="6">
+                    <span class="partName"></span>
+                    <div class="colorRect">
+                        <span class="colorValues">250, 145, 178</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="botRegion">
+
+        <div>
+            <input type="radio" name="hsvrgb" id="radioHSV" checked> <label for="radioHSV">HSV</label>
+            <input type="radio" name="hsvrgb" id="radioRGB"> <label for="radioRGB">RGB</label>
+        </div>
+
+        <div id="sliderRegion">
+            <div class="sliderDiv sliderHSV">
+                <span class="sliderTextL">HUE</span>
+                <input type="range" min="0" max="360" class="slider" id="sliderHue" autocomplete="off">
+                <span class="sliderTextR">55.5</span>
+            </div>
+            <div class="sliderDiv sliderHSV">
+                <span class="sliderTextL">SAT</span>
+                <input type="range" min="0" max="100" class="slider" id="sliderSat" autocomplete="off">
+                <span class="sliderTextR">55.5</span>
+            </div>
+            <div class="sliderDiv sliderHSV">
+                <span class="sliderTextL">VAL</span>
+                <input type="range" min="0" max="100" class="slider" id="sliderVal" autocomplete="off">
+                <span class="sliderTextR">55.5</span>
+            </div>
+            <div class="sliderDiv sliderRGB">
+                <span class="sliderTextL">RED</span>
+                <input type="range" min="0" max="255" class="slider" id="sliderR" autocomplete="off">
+                <span class="sliderTextR">55.5</span>
+            </div>
+            <div class="sliderDiv sliderRGB">
+                <span class="sliderTextL">BLUE</span>
+                <input type="range" min="0" max="255" class="slider" id="sliderG" autocomplete="off">
+                <span class="sliderTextR">55.5</span>
+            </div>
+            <div class="sliderDiv sliderRGB">
+                <span class="sliderTextL">GREEN</span>
+                <input type="range" min="0" max="255" class="slider" id="sliderB" autocomplete="off">
+                <span class="sliderTextR">55.5</span>
+            </div>
+        </div>
+    </div>
 
 </body>
