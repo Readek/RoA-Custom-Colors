@@ -105,9 +105,9 @@ function changeChar() {
 
         // ori is the only character that needs an actual recolor
         if (char.name == "Ori and Sein") {
-            char.currentRGB = char.actualColor;
+            char.currentRGB = [...char.actualColor];
         } else {
-            char.currentRGB = char.ogColor;
+            char.currentRGB = [...char.ogColor];
         }
         // do a first paint 
         mainRecolor(char.currentRGB);
@@ -212,16 +212,14 @@ sliderG.oninput = sliderMoved;
 sliderB.oninput = sliderMoved;
 function sliderMoved() {
 
-    const rgb = [...char.currentRGB];
+    const rgb = char.currentRGB;
     const num = char.currentPart;
 
-    if (radioHSV.checked) {
+    if (radioHSV.checked) { // if hsv sliders are active, translate to rgb
         const rgbFromHsv = hsv2rgb(sliderHue.value / 360, sliderSat.value / 100, sliderVal.value / 100);
         sliderR.value = Math.round(rgbFromHsv[0] * 255);
         sliderG.value = Math.round(rgbFromHsv[1] * 255);
         sliderB.value = Math.round(rgbFromHsv[2] * 255);
-    } else {
-        // todo hsv sliders update
     }
 
     rgb[num*4] = sliderR.value;
@@ -229,6 +227,7 @@ function sliderMoved() {
     rgb[num*4+2] = sliderB.value;
 
     mainRecolor(rgb);
+    parts[num].newColor([rgb[num*4], rgb[num*4+1], rgb[num*4+2]]);
 
     // if changing the hue, update the colors of the other sliders
     if (this === sliderHue) {
