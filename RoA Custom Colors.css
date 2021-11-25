@@ -14,48 +14,132 @@
     src: url('Resources/Fonts/roa-m-bold-loc6.ttf');
 }
 
-/* remove some default styles */
-html, body {
-    padding: 0;
+*, *::before, *::after {
+    box-sizing: border-box;
+    image-rendering: pixelated; /* Chromium */
+    image-rendering: crisp-edges; /* Firefox */
+}
+* {
     margin: 0;
+    
+}
+html, body {
     height: 100%;
 }
+html {
+    background-color: grey;
+    font-family: 'RoA-Bold';
+    text-transform: uppercase;
+    font-size: 48px;
+    color: white;
+    /* oh and you thought this was going to be easy */
+    text-shadow: 4px 0px black, 0px 4px black, -4px 0px black, 0px -4px black, 4px 4px black, -4px -4px black, 4px -4px black, -4px 4px black,
+        4px 2px black, 4px -2px black, 2px 4px black, -2px 4px black, -4px 2px black, -4px -2px black, 2px -4px black, -2px -4px black;
+    letter-spacing: 1px;
+}
 button, input {
-    margin: 0;
     outline: none;
     overflow: visible;
-    border: 0;
+    border: none;
+    font: inherit;
+    padding: 0;
 }
 button {
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-    text-transform: none;
-    box-sizing: content-box;
+    background-color: none;
+    background: none;
+    color: white;
+    text-transform: inherit;
+    text-shadow: inherit;
 }
 button, [type="button"] {
     -webkit-appearance: button;
 }
+button:hover {
+    cursor: pointer;
+}
 
 
-html {
-    background-color: grey;
-    image-rendering: pixelated; /* Chromium */
-    image-rendering: crisp-edges; /* Firefox */
-    font-family: 'RoA-Bold';
+#topRegion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-image: url('/Resources/TopBG.png') 2 fill / 4px repeat stretch;
+    padding: 0px 60px;
+    height: 128px;
+    background-color: #170f39;
+}
+
+
+.topBut {
+    width: 320px;
+    height: 64px;
+    border-image-slice: 4 6 fill;
+    border-image-width: 8px 12px;
+    line-height: 1.4;
+    margin-left: 64px;
+}
+
+#defaultBut {
+    border-image-source: url('/Resources/Buttons/Red.png');
+}
+#defaultBut:hover {
+    border-image-source: url('/Resources/Buttons/RedHover.png');
+}
+#defaultBut:active {
+    border-image-source: url('/Resources/Buttons/RedPress.png');
+}
+#colorCodeBut {
+    border-image-source: url('/Resources/Buttons/Yellow.png');
+}
+#colorCodeBut:hover {
+    border-image-source: url('/Resources/Buttons/YellowHover.png');
+}
+#colorCodeBut:active {
+    border-image-source: url('/Resources/Buttons/YellowPress.png');
+}
+#downloadBut {
+    border-image-source: url('/Resources/Buttons/Blue.png');
+}
+#downloadBut:hover {
+    border-image-source: url('/Resources/Buttons/BlueHover.png');
+}
+#downloadBut:active {
+    border-image-source: url('/Resources/Buttons/BluePress.png');
 }
 
 
 #midRegion {
     display: flex;
+    justify-content: space-between;
 }
 
 #midLeft {
     display: flex;
+    margin-top: 60px;
+}
+
+#charBackground {
+    position: absolute;
+    border-image: url('/Resources/CharBar.png') 2 66 10 2 fill / 4px 132px 20px 4px;
+    width: 1025px;
+    height: 280px;
+    top: 420px;
+    z-index: -1;
+}
+
+#pContainer {
+    transform-origin: 0px 0px;
+    pointer-events: none;
+    margin-left: 44px;
+    overflow: hidden;
 }
 
 #animDiv {
     overflow: hidden;
+    transform: scale(2);
+    position: absolute;
+    left: 750px;
+    top: 525px;
 }
 #animCanvas {
     position: relative;
@@ -70,28 +154,115 @@ html {
 #midRight {
     display: flex;
     flex-direction: column;
+    margin-right: 40px;
+    margin-top: 36px;
 }
 
-.part {
-    cursor: pointer;
+#charNameDiv {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-image: url('/Resources/CharName\ BG.png') 4 34 fill / 8px 68px;
+    width: 968px;
+    height: 128px;
+}
+#backBut, #forwardBut {
+    background: url('/Resources/Buttons/Next.png') no-repeat;
+    width: 98px;
+    height: 68px;
+}
+#backBut:hover, #forwardBut:hover {
+    background: url('/Resources/Buttons/Next\ Pressed.png') no-repeat;
+}
+#forwardBut {
+    transform: scaleX(-1);
+}
+#charName {
+    font-family: 'RoA-Med';
+    font-size: 64px;
+    text-shadow: 4px 0px #170f39, 0px 4px #170f39, -4px 0px #170f39, 0px -4px #170f39, 4px 4px #170f39, -4px -4px #170f39, 4px -4px #170f39, -4px 4px #170f39;
+}
+
+#partList {
+    padding: 28px 60px 28px 168px;
+}
+.part {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 64px;
+    margin-bottom: 4px;
+    padding: 12px 12px 12px 24px;
+    border-image-slice: 4 186 4 6 fill;
+    border-image-width: 8px 372px 8px 12px;
+    border-image-source: url('Resources/Parts/PartBG.png');
+}
+.part:hover {
+    border-image-source: url('Resources/Parts/PartBG\ Hover.png');
+}
+.part:active {
+    border-image-source: url('Resources/Parts/PartBG\ Press.png');
+}
+.part:disabled {
+    cursor: auto;
+    border-image-source: url('Resources/Parts/PartBG\ Disabled.png');
+}
+.colorRect {
+    width: 366px;
+    height: 40px;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    
+}
+.colorValues {
+    font-family: 'RoA-Med';
+    font-size: 24px;
+    text-align: right;
+    width: 100%;
+    margin-right: 8px;
 }
 
 
+#botRegion {
+    text-shadow: none;
+    font-size: 32px;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    border-image: url('/Resources/BotBar\ BG.png') 4 2 2 50 fill / 8px 4px 4px 100px;
+    height: 192px;
+    width: 75%;
+    padding: 20px 48px 12px 72px;
+}
 
 #sliderRegion {
     display: flex;
     flex-direction: column;
+    padding-left: 116px;
+}
+.sliderDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.sliderTextL {
+    width: 100px;
+}
+.sliderTextR {
+    width: 56px;
+    text-align: right;
 }
 .slider {
     -webkit-appearance: none;
-    width: 175px;
-    height: 8px;
+    width: 100%;
+    height: 28px;
     outline: none;
-    border-radius: 10px;
     cursor: pointer;
-    border: 2.5px solid var(--bg);
-    margin: 4px;
+    border: 4px solid white;
+    margin: 0px 8px;
 }
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;

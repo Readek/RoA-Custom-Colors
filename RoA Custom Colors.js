@@ -22,6 +22,17 @@ const sliderB = document.getElementById("sliderB");
 const radioHSV = document.getElementById("radioHSV");
 const radioRGB = document.getElementById("radioRGB");
 
+/* const loadedImgs = [];
+
+function preloadImgs() {
+    
+    for (let i = 0; i < db.chars.length; i++) {
+        
+        
+    }
+
+} */
+
 // set up functions for the character parts
 class charPart {
 
@@ -38,6 +49,7 @@ class charPart {
     newPart(rgb, name) {
         this.partName.innerText = name;
         this.newColor(rgb);
+        this.partDiv.disabled = false;
     }
 
     newColor(rgb) {
@@ -47,9 +59,8 @@ class charPart {
 
     disable() {
         this.partDiv.disabled = true;
-        this.partName.innerText = ""; // test null
-        this.colorRect.style.backgroundColor = `rgb(43, 43, 49)`;
-        this.colorValues.innerText = "";
+        this.partName.innerText = null;
+        this.colorValues.innerText = null;
     }
 
 }
@@ -100,6 +111,10 @@ function changeChar() {
     ]
     // when the images finish loading
     Promise.all(imgPromises).then( () => {
+
+        // dirty trick to scale the character
+        fullCanvas.style.minWidth = fullCanvas.width * 2 + "px";
+        fullCanvas.style.minHeight = fullCanvas.height * 2 + "px";
 
         charNameText.innerText = char.name;
 
@@ -194,6 +209,15 @@ function partClicked() {
     sliderSat.value = hsv[1];
     sliderVal.value = hsv[2];
 
+    // update the slider text value
+    sliderR.parentElement.lastElementChild.innerText = sliderR.value;
+    sliderG.parentElement.lastElementChild.innerText = sliderG.value;
+    sliderB.parentElement.lastElementChild.innerText = sliderB.value;
+    sliderHue.parentElement.lastElementChild.innerText = sliderHue.value;
+    sliderSat.parentElement.lastElementChild.innerText = sliderSat.value;
+    sliderVal.parentElement.lastElementChild.innerText = sliderVal.value;
+
+
     // update the hsv slider color
     const cssRgb = hsv2rgb(hsv[0] / 360, 1, 1);
     cssRgb[0] = cssRgb[0] * 255;
@@ -238,6 +262,9 @@ function sliderMoved() {
         sliderSat.style.background = "linear-gradient(to right, white, rgb(" + cssRgb[0] + ", " + cssRgb[1] + ", " + cssRgb[2] + ")";
         sliderVal.style.background = "linear-gradient(to right, black, rgb(" + cssRgb[0] + ", " + cssRgb[1] + ", " + cssRgb[2] + ")";
     }
+
+    // update value text
+    this.parentElement.lastElementChild.innerText = this.value;
 
 }
 
