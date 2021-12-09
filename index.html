@@ -12,16 +12,49 @@
 
 <body>
 
-    <div id="topRegion">
-        <div id="ccTitle">
-            <div id="titleCustom">CUSTOM</div>
-            <div id="titleColors">COLORS</div>
+    <div id="infoRegion">
+
+        <div id="undoMessage">
+
+            <p>UNDO ALL CHANGES?</p>
+
+            <div id="defaultButsRegion">
+                <button class="genericBut hideBut" id="cancelDefaultBut">NO</button>
+                <button class="genericBut hideBut" id="confirmDefaultBut">YES</button>
+            </div>
+
         </div>
+
+        <div id="colorCodeRegion">
+
+            <div id="cCodeTop">
+                <span id="cCodeTitle">IMPORT COLOR CODE</span>
+                <span id="cCodeError">INVALID CODE</span>
+            </div>
+
+            <div id="cCodeBot">
+                <span id="colorCode">445C-46F5-F5F5-6E23-2342-1515-345B-3065</span>
+            </div>
+
+            <div id="cColorButRegion">
+                <button class="cColorBut hideBut" id="cColorButBack">BACK</button>
+                <button class="cColorBut" id="cColorButCopy">COPY</button>
+                <button class="cColorBut" id="cColorButPaste">PASTE</button>
+                <button class="cColorBut hideBut" id="cColorButApply">APPLY</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="topRegion">
+        <a href="https://rivalsofaether.com/" id="roaLink">
+            <img src="Resources/Logo.png" alt="RoA link image" id="roaLinkImg">
+        </a>
         <div>
             <button id="defaultBut" class="topBut">DEFAULT</button>
             <button id="colorCodeBut" class="topBut">COLOR CODE</button>
-            <button id="downloadBut" class="topBut">GET IMAGE</button>
-            
+            <a id="downloadBut" class="topBut">GET IMAGE</a>
         </div>
     </div>
 
@@ -32,11 +65,11 @@
             <div id="charBackground"></div>
 
             <div id="pContainer">
-                <canvas id="portCanvas" title="To download, press the download button"></canvas>
+                <canvas id="portCanvas"></canvas>
             </div>
         
             <div id="animDiv">
-                <canvas id="animCanvas" title="To download, press the download button down below"></canvas>
+                <canvas id="animCanvas"></canvas>
             </div>
 
         </div>
@@ -132,9 +165,25 @@
             </div>
         </div>
 
-        <div>
-            <input type="radio" name="hsvrgb" id="radioHSV" checked> <label for="radioHSV">HSV</label>
-            <input type="radio" name="hsvrgb" id="radioRGB"> <label for="radioRGB">RGB</label>
+        <div id="finalColorRegion">
+
+            <div id="cmSwitcher">
+                <input type="checkbox" name="hsvrgb" id="radioHSV" checked hidden autocomplete="off">
+                <label for="radioHSV"><img src="Resources/Buttons/HSV.png" alt="Color mode switcher" id="imgHSV"></label>
+            </div>
+
+            <div id="squaresRegion">
+                <div class="squareRGB" id="squareR"></div>
+                <img src="Resources/Plus.png" alt="Plus sign" class="plusSign">
+                <div class="squareRGB" id="squareG"></div>
+                <img src="Resources/Plus.png" alt="Plus sign" class="plusSign">
+                <div class="squareRGB" id="squareB"></div>
+                <img src="Resources/Equals.png" alt="Equals sign" id="equalsSign">
+                <div id="squareRGB"></div>
+            </div>
+
+            <div id="emptyRight"></div>
+            
         </div>
 
     </div>

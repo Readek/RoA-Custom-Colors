@@ -18,6 +18,10 @@ const sliderVal = document.getElementById("sliderVal");
 const sliderR = document.getElementById("sliderR");
 const sliderG = document.getElementById("sliderG");
 const sliderB = document.getElementById("sliderB");
+const squareR = document.getElementById("squareR");
+const squareG = document.getElementById("squareG");
+const squareB = document.getElementById("squareB");
+const squareRGB = document.getElementById("squareRGB");
 
 const radioHSV = document.getElementById("radioHSV");
 const radioRGB = document.getElementById("radioRGB");
@@ -226,6 +230,12 @@ function partClicked() {
     sliderSat.style.background = `linear-gradient(to right, white, rgb(${cssRgb[0]}, ${cssRgb[1]}, ${cssRgb[2]})`;
     sliderVal.style.background = `linear-gradient(to right, black, rgb(${cssRgb[0]}, ${cssRgb[1]}, ${cssRgb[2]})`;
 
+    // update the bottom squares
+    squareR.style.backgroundColor = `rgb(${rgb[num*4]}, 0, 0)`;
+    squareG.style.backgroundColor = `rgb(0, ${rgb[num*4+1]}, 0)`;
+    squareB.style.backgroundColor = `rgb(0, 0, ${rgb[num*4+2]})`;
+    squareRGB.style.backgroundColor = `rgb(${rgb[num*4]}, ${rgb[num*4+1]}, ${rgb[num*4+2]})`;
+
 }
 
 sliderHue.oninput = sliderMoved;
@@ -266,24 +276,93 @@ function sliderMoved() {
     // update value text
     this.parentElement.lastElementChild.innerText = this.value;
 
+    // update the bottom squares
+    squareR.style.backgroundColor = `rgb(${rgb[num*4]}, 0, 0)`;
+    squareG.style.backgroundColor = `rgb(0, ${rgb[num*4+1]}, 0)`;
+    squareB.style.backgroundColor = `rgb(0, 0, ${rgb[num*4+2]})`;
+    squareRGB.style.backgroundColor = `rgb(${rgb[num*4]}, ${rgb[num*4+1]}, ${rgb[num*4+2]})`;
+
 }
 
 
+// generic cancel button
+setupHideMessage();
+function setupHideMessage() {
+    const cancelButs = document.getElementsByClassName("hideBut");
+    for (let i = 0; i < cancelButs.length; i++) {
+        cancelButs[i].addEventListener("click", () => {
+
+            // hide the panel belonging to this button
+            cancelButs[i].parentElement.parentElement.style.display = "none";
+            // then hide the black background
+            cancelButs[i].parentElement.parentElement.parentElement.style.display = "none";
+
+        });
+    }
+}
+
+// default button
+document.getElementById("defaultBut").addEventListener("click", () => {
+
+    if (char.currentRGB.toString() !== char.ogColor.toString()) {
+        document.getElementById("infoRegion").style.display = "flex";
+        document.getElementById("undoMessage").style.display = "block";
+    }
+
+});
+// confirm default
+document.getElementById("confirmDefaultBut").addEventListener("click", () => {
+    
+    // set the colors to default
+    if (char.name == "Ori and Sein") {
+        char.currentRGB = [...char.actualColor];
+    } else {
+        char.currentRGB = [...char.ogColor];
+    }
+
+    // and paint it
+    mainRecolor(char.currentRGB);
+
+    // update all values
+    updateListFull(char.currentRGB);
+
+    // set the sliders to the first part by clicking it
+    parts[char.currentPart].partDiv.click();
+
+});
+
+// color code button
+document.getElementById("colorCodeBut").addEventListener("click", () => {
+    document.getElementById("infoRegion").style.display = "flex";
+    document.getElementById("colorCodeRegion").style.display = "block";
+});
+// buttons inside color code menu
+
+
+// get image button
+document.getElementById("downloadBut").addEventListener("click", () => {
+    document.getElementById("downloadBut").setAttribute("download", char.name + " Recolor");
+    mainRecolor(char.currentRGB, "Portrait");
+});
+
+// rgb & hsv switcher
 radioHSV.addEventListener("click", changeSliders);
-radioRGB.addEventListener("click", changeSliders);
 function changeSliders() {
     const slidersHSV = document.getElementsByClassName("sliderHSV");
     const slidersRGB = document.getElementsByClassName("sliderRGB");
+    const imgHSV = document.getElementById("imgHSV");
     if (radioHSV.checked) {
         for (let i = 0; i < slidersHSV.length; i++) {
             slidersHSV[i].style.display = "inherit";
             slidersRGB[i].style.display = "none";
         }
+        imgHSV.src = "Resources/Buttons/HSV.png";
     } else {
         for (let i = 0; i < slidersHSV.length; i++) {
             slidersHSV[i].style.display = "none";
             slidersRGB[i].style.display = "inherit";
         }
+        imgHSV.src = "Resources/Buttons/RGB.png";
     }
 }
 

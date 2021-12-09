@@ -376,7 +376,7 @@ function render(glCan, colorOut, dl = false) {
 
   // this will activate when the user downloads the image
   if (dl) {
-    document.getElementById(dl).href = canvas.toDataURL()
+    document.getElementById("downloadBut").href = canvas.toDataURL()
   }
 
 }

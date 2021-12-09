@@ -27,7 +27,7 @@ html, body {
     height: 100%;
 }
 html {
-    background-color: grey;
+    background: center/512px url(Resources/BG.png);
     font-family: 'RoA-Bold';
     text-transform: uppercase;
     font-size: 48px;
@@ -69,6 +69,17 @@ button:hover {
     background-color: #170f39;
 }
 
+#roaLink {
+    height: 96px;
+}
+#roaLinkImg {
+    height: 96px;
+    filter: invert(1);
+    image-rendering: auto;
+}
+#roaLinkImg:hover {
+    filter: invert(0);
+}
 
 .topBut {
     width: 320px;
@@ -99,9 +110,14 @@ button:hover {
 }
 #downloadBut {
     border-image-source: url('/Resources/Buttons/Blue.png');
+    float: right;
+    text-align: center;
+    color: inherit;
+    text-decoration: inherit;
 }
 #downloadBut:hover {
     border-image-source: url('/Resources/Buttons/BlueHover.png');
+    cursor: pointer;
 }
 #downloadBut:active {
     border-image-source: url('/Resources/Buttons/BluePress.png');
@@ -208,6 +224,9 @@ button:hover {
     cursor: auto;
     border-image-source: url('Resources/Parts/PartBG\ Disabled.png');
 }
+.partName {
+    height: 36px;
+}
 .colorRect {
     width: 366px;
     height: 40px;
@@ -249,11 +268,15 @@ button:hover {
     margin-bottom: 8px;
 }
 .sliderTextL {
-    width: 100px;
+    width: 86px;
+    height: 24px;
+    flex-shrink: 0;
 }
 .sliderTextR {
-    width: 56px;
+    width: 48px;
+    height: 24px;
     text-align: right;
+    flex-shrink: 0;
 }
 .slider {
     -webkit-appearance: none;
@@ -265,18 +288,21 @@ button:hover {
     margin: 0px 8px;
 }
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    box-sizing: content-box;
     appearance: none;
-    width: 8px;
+    width: 4px;
     height: 20px;
-    border-radius: 5px;
-    background: lightgray;
+    border: 4px solid white;
+    outline: 4px solid black;
     cursor: pointer;
 }
 .slider::-moz-range-thumb {
-    width: 8px;
+    width: 4px;
     height: 20px;
-    background: lightgray;
+    border: 4px solid white;
+    outline: 4px solid black;
+    border-radius: 0;
+    background: none;
     cursor: pointer;
 }
 #sliderHue {
@@ -294,4 +320,160 @@ button:hover {
 }
 #sliderB {
     background: linear-gradient(to right, black, blue);
+}
+
+
+#finalColorRegion {
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+}
+
+#cmSwitcher {
+    padding-right: 38px;
+    height: 44px;
+}
+#cmSwitcher:hover {
+    filter: brightness(2);
+}
+
+#imgHSV {
+    cursor: pointer;
+    width: 172px;
+    height: 44px;
+}
+
+#squaresRegion {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.squareRGB{
+    width: 72px;
+    height: 32px;
+    box-shadow: 4px 0px white, 0px 4px white, -4px 0px white, 0px -4px white;
+    margin: 0px 4px;
+    flex-shrink: 0;
+}
+.plusSign {
+    margin: 0px 8px;
+    width: 24px;
+    height: 24px;
+}
+#equalsSign {
+    margin: 0px 20px;
+    width: 32px;
+    height: 24px;
+}
+#squareRGB {
+    width: 100%;
+    height: 32px;
+    box-shadow: 4px 0px white, 0px 4px white, -4px 0px white, 0px -4px white;
+    margin: 0px 4px;
+}
+
+#emptyRight {
+    width: 72px;
+}
+
+
+#infoRegion {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 100;
+    display: none;
+}
+
+
+#undoMessage {
+    padding: 36px;
+    background-color: #271d52;
+    box-shadow: 0 0 0 4px #493980, 0 0 0 8px #271d52, 0 0 0 12px black;
+}
+#defaultButsRegion {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 24px;
+}
+.genericBut {
+    width: 144px;
+    height: 64px;
+    border-image-source: url('/Resources/Buttons/Generic.png');
+    border-image-slice: 6 fill;
+    border-image-width: 12px;
+    line-height: 1.4;
+}
+.genericBut:hover {
+    border-image-source: url('/Resources/Buttons/GenericHover.png');
+}
+#cancelDefaultBut {
+    color: #fe555d;
+}
+#confirmDefaultBut {
+    color: #55fe71;
+}
+
+
+#colorCodeRegion {
+    font-family: "RoA-Med";
+    width: 752px;
+    display: none;
+}
+
+#cCodeTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-image: url('/Resources/CCode\ Top.png') 4 4 2 4 fill / 8px 8px 4px 8px;
+    padding: 8px 20px;
+}
+#cCodeTitle {
+    font-size: 32px;
+    color: #fce800;
+}
+#cCodeError {
+    font-size: 24px;
+    color: #fe555d;
+    display: none;
+}
+
+#cCodeBot {
+    border-image: url('/Resources/CCode\ Bot.png') 2 6 6 6 fill / 4px 12px 12px 12px;
+    padding: 16px 20px;
+    font-size: 32px;
+}
+#colorCode {
+    width: 100%;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+#cColorButRegion {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 8px;
+}
+.cColorBut {
+    border-image: url('/Resources/Buttons/CCode\ But.png') 6 6 6 6 fill / 12px 12px 12px 12px;
+    padding: 8px 20px;
+    width: 136px;
+    font-size: 24px;
+}
+.cColorBut:hover {
+    filter: brightness(1.5);
+}
+.cColorBut:active {
+    filter: brightness(0.5);
+}
+#cColorButBack {
+    color: #fe555d;
+}
+#cColorButApply {
+    color: #55fe71;
 }
