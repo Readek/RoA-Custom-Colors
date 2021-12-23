@@ -81,13 +81,6 @@ const db = {
                 1, 1, 1, 1,
                 1, 1, 1, 1
             ],
-            blend : [
-                1, 1, 1, 1,
-                1, 1, 1, 1,
-                1, 1, 1, 1,
-                1, 1, 1, 1,
-                1, 1, 1, 1
-            ],
             partNames : ["Body", "Hands", "Scarf", "Belly", "Beak"],
             idleFC : 8,
             placeholder : "0000-0000-0000-0000-0000-0000-0000-0000"
@@ -114,7 +107,8 @@ const db = {
             ],
             partNames : ["Rock", "Skin", "Armor", "Shading"],
             idleFC : 6,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000"
+            placeholder : "0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Forsburn",
@@ -174,7 +168,8 @@ const db = {
             ],
             partNames : ["Body", "Belly", "Leaf", "Marks", "Vines"],
             idleFC : 6,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000"
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Absa",
@@ -201,7 +196,8 @@ const db = {
             ],
             partNames : ["Body", "Hair", "Lightning", "Horns", "Belly"],
             idleFC : 24,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000"
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Etalus",
@@ -263,7 +259,8 @@ const db = {
             ],
             partNames : ["Body", "Detail", "Eyes", "Sein", "Energy"],
             idleFC : 8,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000"              
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Ranno",

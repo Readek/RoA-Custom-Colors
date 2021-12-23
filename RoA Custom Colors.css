@@ -1,5 +1,5 @@
 :root {
-    /* these will get modified by Recolors.js */
+    /* these will get modified by RoA Custom Colors.js */
     --spriteTime: 0s;
     --spriteCount: 0;
     --spriteMove: 0px;
@@ -385,16 +385,19 @@ button:hover {
     align-items: center;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 100;
-    display: none;
 }
 
 
-#undoMessage {
+.simpleMessage {
+    display: none;
     padding: 36px;
     background-color: #271d52;
     box-shadow: 0 0 0 4px #493980, 0 0 0 8px #271d52, 0 0 0 12px black;
+}
+#loadMessage {
+    display: flex;
 }
 #defaultButsRegion {
     display: flex;
@@ -415,14 +418,14 @@ button:hover {
 #cancelDefaultBut {
     color: #fe555d;
 }
-#confirmDefaultBut {
+#confirmDefaultBut, #confirmDiscardBut {
     color: #55fe71;
 }
 
 
 #colorCodeRegion {
     font-family: "RoA-Med";
-    width: 752px;
+    width: 620px;
     display: none;
 }
 
@@ -440,18 +443,25 @@ button:hover {
 #cCodeError {
     font-size: 24px;
     color: #fe555d;
-    display: none;
 }
 
 #cCodeBot {
     border-image: url('/Resources/CCode\ Bot.png') 2 6 6 6 fill / 4px 12px 12px 12px;
     padding: 16px 20px;
-    font-size: 32px;
 }
 #colorCode {
     width: 100%;
     word-break: break-all;
     overflow: hidden;
+    background: none;
+    border: none;
+    font-family: "RoA-Med";
+    font-size: 32px;
+    color: white;
+    outline: none;
+    resize: none;
+    text-shadow: 4px 0px black, 0px 4px black, -4px 0px black, 0px -4px black, 4px 4px black, -4px -4px black, 4px -4px black, -4px 4px black,
+        4px 2px black, 4px -2px black, 2px 4px black, -2px 4px black, -4px 2px black, -4px -2px black, 2px -4px black, -2px -4px black;
 }
 
 #cColorButRegion {
@@ -471,9 +481,29 @@ button:hover {
 .cColorBut:active {
     filter: brightness(0.5);
 }
+.cColorBut:disabled {
+    filter: brightness(0.5);
+    pointer-events: none;
+}
 #cColorButBack {
     color: #fe555d;
 }
 #cColorButApply {
     color: #55fe71;
+}
+
+#copiedText {
+    position: absolute;
+    color: #FCE800;
+    text-align: center;
+    display: none;
+    animation: copiedAnim 1s ease 1 both;
+    transform: translateY(48px);
+}
+
+@keyframes copiedAnim {
+    0%   {transform: translateY(8px); opacity: 0;}
+    10%  {transform: translateY(48px); opacity: 1;}
+    75%  {opacity: 1;}
+    100% {opacity: 0;}
 }

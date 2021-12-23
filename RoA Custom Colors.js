@@ -4,6 +4,9 @@ let char; // this will hold the values from the character database
 let characterImgs; // this will hold a class from "RoA WebGL Shader.js"
 let charNum = 0;
 let rgbSliders; // if active, the page will use rgb sliders instead of hsv ones
+let direction; // will tell which animations to play when switching chars
+
+const codeReg = "^([A-Fa-f0-9]+\-)+([A-Fa-f0-9])+$";
 
 const charNameText = document.getElementById("charName");
 
@@ -11,6 +14,11 @@ const fullCanvas = document.getElementById("portCanvas");
 const animCanvas = document.getElementById("animCanvas");
 
 const animDiv = document.getElementById("animDiv");
+
+const colorCode = document.getElementById("colorCode");
+const cCodeError = document.getElementById("cCodeError");
+const cCodeButCopy = document.getElementById("cColorButCopy");
+const cCodeButApply = document.getElementById("cColorButApply");
 
 const sliderHue = document.getElementById("sliderHue");
 const sliderSat = document.getElementById("sliderSat");
@@ -26,16 +34,8 @@ const squareRGB = document.getElementById("squareRGB");
 const radioHSV = document.getElementById("radioHSV");
 const radioRGB = document.getElementById("radioRGB");
 
-/* const loadedImgs = [];
+const loadedImgs = [];
 
-function preloadImgs() {
-    
-    for (let i = 0; i < db.chars.length; i++) {
-        
-        
-    }
-
-} */
 
 // set up functions for the character parts
 class charPart {
@@ -81,25 +81,44 @@ function createPartList() {
 
 
 // when the page loads, change to a random character
+preloadImgs().then( () => {
+    // hide the panel belonging to this button
+    document.getElementById("loadMessage").style.display = "none";
+    // then hide the black background
+    document.getElementById("loadMessage").parentElement.style.display = "none";
+    changeChar();
+});
+   
 changeChar();
 
 // add event listeners to the back and forward character buttons
-document.getElementById("backBut").addEventListener("click", () => {
-    if (charNum == 0) {
-        charNum = db.chars.length - 1;
+document.getElementById("backBut").addEventListener("click", () => {checkNextPrev(true)});
+document.getElementById("forwardBut").addEventListener("click", () => {checkNextPrev()});
+document.getElementById("confirmDiscardBut").addEventListener("click", () => {nextPrevChar()})
+function checkNextPrev(dir) {
+    direction = dir;
+    if (char.actualColor) {
+        if (char.currentRGB.toString() !== char.actualColor.toString()) {
+            displayMessage("discardMessage");
+        } else {
+            nextPrevChar();
+        }
     } else {
-        charNum--;
+        if (char.currentRGB.toString() !== char.ogColor.toString()) {
+            displayMessage("discardMessage");
+        } else {
+            nextPrevChar();
+        }
+    }
+}
+function nextPrevChar() {
+    if (direction) {
+        charNum == 0 ? charNum = db.chars.length - 1 : charNum--;
+    } else {
+        charNum == db.chars.length - 1 ? charNum = 0 : charNum++;
     }
     changeChar();
-});
-document.getElementById("forwardBut").addEventListener("click", () => {
-    if (charNum == db.chars.length - 1) {
-        charNum = 0;
-    } else {
-        charNum++;
-    }
-    changeChar();
-});
+}
 
 // whenever the character changes
 function changeChar() {
@@ -256,9 +275,9 @@ function sliderMoved() {
         sliderB.value = Math.round(rgbFromHsv[2] * 255);
     }
 
-    rgb[num*4] = sliderR.value;
-    rgb[num*4+1] = sliderG.value;
-    rgb[num*4+2] = sliderB.value;
+    rgb[num*4] = Number(sliderR.value);
+    rgb[num*4+1] = Number(sliderG.value);
+    rgb[num*4+2] = Number(sliderB.value);
 
     mainRecolor(rgb);
     parts[num].newColor([rgb[num*4], rgb[num*4+1], rgb[num*4+2]]);
@@ -303,12 +322,9 @@ function setupHideMessage() {
 
 // default button
 document.getElementById("defaultBut").addEventListener("click", () => {
-
     if (char.currentRGB.toString() !== char.ogColor.toString()) {
-        document.getElementById("infoRegion").style.display = "flex";
-        document.getElementById("undoMessage").style.display = "block";
+        displayMessage("undoMessage");
     }
-
 });
 // confirm default
 document.getElementById("confirmDefaultBut").addEventListener("click", () => {
@@ -333,10 +349,136 @@ document.getElementById("confirmDefaultBut").addEventListener("click", () => {
 
 // color code button
 document.getElementById("colorCodeBut").addEventListener("click", () => {
-    document.getElementById("infoRegion").style.display = "flex";
-    document.getElementById("colorCodeRegion").style.display = "block";
+    genColorCode();
+    displayMessage("colorCodeRegion");
 });
-// buttons inside color code menu
+function genColorCode() {
+    // code modified from https://github.com/ErrorThreeOThree/ROAColorCodeBot
+
+    const colorNum = char.actualParts ? char.actualParts : char.ogColor.length / 4;
+
+    // separate rgb values
+    let r = [], g = [], b = [];
+    for (let i = 0; i < colorNum; i++) {
+        r.push(char.currentRGB[i*4]);
+        g.push(char.currentRGB[i*4+1]);
+        b.push(char.currentRGB[i*4+2]);
+    }
+    
+    // generate a valid checksum (this is only for the game, the webpage doesn't need this)
+	let checksum = 0;
+	for (let i = 0; i < colorNum; i++) {
+		checksum += (i + 101) * r[i];
+		checksum += (i + 102) * g[i];
+		checksum += (i + 103) * b[i];
+	}
+    checksum = checksum % 256;
+    
+    // convert the rgb values to hex, add those and the checksum to a single string
+    let code = "";
+    let i = 0;
+	for (i; i < colorNum; i++) {
+		code += r[i].toString(16).toUpperCase().padStart(2, '0');
+		code += g[i].toString(16).toUpperCase().padStart(2, '0');
+		code += b[i].toString(16).toUpperCase().padStart(2, '0');
+	}
+	code += checksum.toString(16).toUpperCase().padStart(2, '0');
+	if (i % 2 == 0)	{
+		code += "00";
+    }
+
+    //put the code in the code input, separating the full color code with "-" every 4 characters    
+    colorCode.value = code.match(/.{1,4}/g).join("-");
+
+}
+// color code input control
+colorCode.addEventListener("input", () => {
+
+    //look if the code length is correct
+    if (colorCode.value.length == char.placeholder.length &&
+        colorCode.value.match(codeReg)) {
+
+       //if correct, set everything to normal
+       cCodeError.innerText = "";
+
+       // allow apply button
+       cCodeButApply.disabled = false;
+
+   } else {
+
+       //prevent the user from interacting with the copy button
+       cCodeButApply.disabled = true;
+
+       if (!colorCode.value) { // if theres no code
+
+           // just remove the warning text
+           codeWarning.innerHTML = "";
+   
+       } else { // check if its above or below the limit
+           if (colorCode.value.length < char.placeholder.length) {
+   
+               //if its below the limit, warn the user
+               cCodeError.innerText = char.placeholder.length - colorCode.value.length;
+       
+           } else if (colorCode.value.length > char.placeholder.length) {
+       
+               //if its above the limit, well thats a big no no
+               cCodeError.innerText = colorCode.value.length - char.placeholder.length;
+       
+           } else {
+
+               // if the regex failed
+               cCodeError.innerText = "Invalid code";
+               
+           }
+   
+       }
+
+   } 
+})
+
+// copy button
+cCodeButCopy.addEventListener("click", () => {
+    navigator.clipboard.writeText(colorCode.value);
+    document.getElementById("copiedText").style.display = "inherit";
+});
+//automatically enable copy animation once current one finishes
+document.getElementById("copiedText").addEventListener('animationend', () => {
+    document.getElementById("copiedText").style.display = "none";
+});
+
+// apply color code button
+cCodeButApply.addEventListener("click", () => {
+
+    const rgb = hexDecode(colorCode.value); // translate the color code
+
+    rgb.splice(rgb.length - 4); //remove the checksum at the end of the code
+
+    // Olympia needs some special treatment since the pants colors affect all whites
+    if (char.name == "Olympia") {
+        rgb.push(char.ogColor[24], char.ogColor[25], char.ogColor[26], char.ogColor[27])
+    }
+
+    if (char.name == "Orcane") { // orcane has a greenish hidden part
+        for (let i = 0; i < 4; i++) { // add the 1st colors as the 3rd colors
+            rgb[i+8] = rgb[i];
+        }
+    }
+
+    char.currentRGB = rgb;
+
+    mainRecolor(char.currentRGB);
+    updateListFull(char.currentRGB);
+    parts[0].partDiv.click();
+
+})
+
+
+// generic message display function
+function displayMessage(messageID) {
+    document.getElementById("infoRegion").style.display = "flex";
+    document.getElementById(messageID).style.display = "block";
+}
 
 
 // get image button
@@ -344,6 +486,7 @@ document.getElementById("downloadBut").addEventListener("click", () => {
     document.getElementById("downloadBut").setAttribute("download", char.name + " Recolor");
     mainRecolor(char.currentRGB, "Portrait");
 });
+
 
 // rgb & hsv switcher
 radioHSV.addEventListener("click", changeSliders);
@@ -431,7 +574,77 @@ function rgb2hsv (r, g, b) {
 
 }
 
+function hexDecode(hex) {
+
+    // delete those "-" from the code
+    let newHex = hex.replace(/-/g, "");
+
+    // split each color for every 6 characters
+    const charHex = newHex.match(/.{1,6}/g);
+
+    // create an array for the shader with rgba values
+    const charRGB = [];
+    for (let i = 0; i < charHex.length; i++) {
+        const newArr = hex2rgb(charHex[i]);
+        charRGB.push(newArr[0], newArr[1], newArr[2], 1); //r, g, b, a
+    }
+    return charRGB;
+
+}
+
 //just a simple random function
 function genRnd(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+
+// we preload all images so the app can feel as snappy as possible
+async function preloadImgs() {
+    
+    // character imgs
+    for (let i = 0; i < db.chars.length; i++) {
+        
+        loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Anim.png`));
+        loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Portrait.png`));
+        if (db.chars[i].extra) {
+            loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Extra.png`));
+        }
+        
+    }
+
+    // everything else
+    loadedImgs.push(newImg("Resources/CCode Bot.png"));
+    loadedImgs.push(newImg("Resources/CCode Top.png"));
+    loadedImgs.push(newImg("Resources/Buttons/BlueHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/BluePress.png"));
+    loadedImgs.push(newImg("Resources/Buttons/CCode But.png"));
+    loadedImgs.push(newImg("Resources/Buttons/GenericHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/Next Pressed.png"));
+    loadedImgs.push(newImg("Resources/Buttons/RedHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/RedPress.png"));
+    loadedImgs.push(newImg("Resources/Buttons/RGB.png"));
+    loadedImgs.push(newImg("Resources/Buttons/YellowHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/YellowPress.png"));
+    loadedImgs.push(newImg("Resources/Parts/PartBG Hover.png"));
+    loadedImgs.push(newImg("Resources/Parts/PartBG Press.png"));
+    loadedImgs.push(newImg("Resources/Parts/PartBG Disabled.png"));
+
+    const imgPromises = [];
+
+    for (let i = 0; i < loadedImgs.length; i++) {
+        imgPromises.push(loadedImgs[i].decode())
+    }
+
+    Promise.all(imgPromises).then( () => {
+        return
+    })
+
+}
+
+function newImg(url) {
+    
+    const img = document.createElement("img");
+    img.src = url;
+    return img;
+
 }

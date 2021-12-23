@@ -14,7 +14,13 @@
 
     <div id="infoRegion">
 
-        <div id="undoMessage">
+        <div id="loadMessage" class="simpleMessage">
+
+            <p>LOADING IMAGES...</p>
+
+        </div>
+
+        <div id="undoMessage" class="simpleMessage">
 
             <p>UNDO ALL CHANGES?</p>
 
@@ -25,22 +31,35 @@
 
         </div>
 
+        <div id="discardMessage" class="simpleMessage">
+
+            <p>DISCARD CHANGES?</p>
+
+            <div id="defaultButsRegion">
+                <button class="genericBut hideBut" id="cancelDefaultBut">NO</button>
+                <button class="genericBut hideBut" id="confirmDiscardBut">YES</button>
+            </div>
+
+        </div>
+
         <div id="colorCodeRegion">
 
             <div id="cCodeTop">
                 <span id="cCodeTitle">IMPORT COLOR CODE</span>
-                <span id="cCodeError">INVALID CODE</span>
+                <span id="cCodeError"></span>
             </div>
 
             <div id="cCodeBot">
-                <span id="colorCode">445C-46F5-F5F5-6E23-2342-1515-345B-3065</span>
+                <textarea id="colorCode" placeholder="Type your color code here"></textarea>
             </div>
 
             <div id="cColorButRegion">
                 <button class="cColorBut hideBut" id="cColorButBack">BACK</button>
-                <button class="cColorBut" id="cColorButCopy">COPY</button>
-                <button class="cColorBut" id="cColorButPaste">PASTE</button>
-                <button class="cColorBut hideBut" id="cColorButApply">APPLY</button>
+                <button class="cColorBut" id="cColorButCopy">
+                    <span id="copiedText">COPIED!</span>
+                    COPY
+                </button>
+                <button class="cColorBut hideBut" id="cColorButApply" disabled>APPLY</button>
             </div>
 
         </div>
