@@ -14,9 +14,37 @@
 
     <div id="infoRegion">
 
+        <div id="noWebGL" class="simpleMessage">
+
+            <p>WebGL2 could not be loaded</p>
+
+            <p class="lilInfoText">Without WebGL2 support, this page doesn't work!<br>This is showing up because either WebGL2 is disabled on your browser, or your device is really really old.</p>
+            <p class="lilInfoText">You may be able to manually activate WebGL2 on your browser's settings.</p>
+
+        </div>
+
         <div id="loadMessage" class="simpleMessage">
 
             <p>LOADING IMAGES...</p>
+
+            <p class="lilInfoText"><span id="loadImgsLeft">0</span> / <span id="loadImgsTotal"></span></p>
+
+            <div id="loadError">
+                <p class="lilInfoText">There was an error loading images</p>
+                <p class="lilInfoText">Please, reload the page</p>
+            </div>
+        </div>
+
+        <div id="helpMessage" class="simpleMessage">
+
+            <p>Welcome!</p>
+
+            <p class="lilInfoText"><br>Here, you can create your own skin for any character.</p>
+            <p class="lilInfoText"><br>You can then export your skin to be used ingame.</p>
+            <p class="lilInfoText"><br>Click on the color code button to export your skin.</p>
+            <div>
+                <button class="genericBut hideBut" id="okHelp">OK</button>
+            </div>
 
         </div>
 
@@ -71,78 +99,104 @@
             <img src="Resources/Logo.png" alt="RoA link image" id="roaLinkImg">
         </a>
         <div>
-            <button id="defaultBut" class="topBut">DEFAULT</button>
-            <button id="colorCodeBut" class="topBut">COLOR CODE</button>
-            <a id="downloadBut" class="topBut">GET IMAGE</a>
+            <button id="defaultBut" class="topBut" title="Reset current skin to the default one">DEFAULT</button>
+            <button id="colorCodeBut" class="topBut" title="Get a color code to be used ingame">COLOR CODE</button>
+            <a id="downloadBut" class="topBut" title="Downloads current portrait">GET IMAGE</a>
         </div>
     </div>
 
     <div id="midRegion">
 
-        <div id="midLeft">
+        <div id="charBackground"></div>
 
-            <div id="charBackground"></div>
+        <div id="midLeft">
 
             <div id="pContainer">
                 <canvas id="portCanvas"></canvas>
             </div>
-        
-            <div id="animDiv">
-                <canvas id="animCanvas"></canvas>
-            </div>
+            
+            <div id="spriteDiv">
 
+                <div id="eContainer">
+                    <canvas id="extraCanvas"></canvas>
+                </div>
+
+                <div id="animDiv">
+                    <canvas id="animCanvas"></canvas>
+                </div>
+                
+            </div>
+            
         </div>
         
         <div id="midRight">
             <div id="charNameDiv">
                 <button id="backBut"></button>
                 <span id="charName"></span>
-                <button id="forwardBut"></button>
+                <div id="animForwardBut">
+                    <button id="forwardBut"></button>
+                </div>
             </div>
     
             <div id="partList">
-                <button class="part" num="0">
-                    <span class="partName"></span>
-                    <div class="colorRect">
-                        <span class="colorValues"></span>
-                    </div>
-                </button>
-                <button class="part" num="1">
-                    <span class="partName"></span>
-                    <div class="colorRect">
-                        <span class="colorValues"></span>
-                    </div>
-                </button>
-                <button class="part" num="2">
-                    <span class="partName"></span>
-                    <div class="colorRect">
-                        <span class="colorValues"></span>
-                    </div>
-                </button>
-                <button class="part" num="3">
-                    <span class="partName"></span>
-                    <div class="colorRect">
-                        <span class="colorValues"></span>
-                    </div>
-                </button>
-                <button class="part" num="4">
-                    <span class="partName"></span>
-                    <div class="colorRect">
-                        <span class="colorValues"></span>
-                    </div>
-                </button>
-                <button class="part" num="5">
-                    <span class="partName"></span>
-                    <div class="colorRect">
-                        <span class="colorValues"></span>
-                    </div>
-                </button>
-                <button class="part" num="6">
-                    <span class="partName"></span>
-                    <div class="colorRect">
-                        <span class="colorValues"></span>
-                    </div>
-                </button>
+                
+                <div>
+                    <button class="part" num="0">
+                        <span class="partName"></span>
+                        <div class="colorRect">
+                            <span class="colorValues"></span>
+                        </div>
+                    </button>
+                </div>
+                <div>
+                    <button class="part" num="1">
+                        <span class="partName"></span>
+                        <div class="colorRect">
+                            <span class="colorValues"></span>
+                        </div>
+                    </button>
+                </div>
+                <div>
+                    <button class="part" num="2">
+                        <span class="partName"></span>
+                        <div class="colorRect">
+                            <span class="colorValues"></span>
+                        </div>
+                    </button>
+                </div>
+                <div>
+                    <button class="part" num="3">
+                        <span class="partName"></span>
+                        <div class="colorRect">
+                            <span class="colorValues"></span>
+                        </div>
+                    </button>
+                </div>
+                <div>
+                    <button class="part" num="4">
+                        <span class="partName"></span>
+                        <div class="colorRect">
+                            <span class="colorValues"></span>
+                        </div>
+                    </button>
+                </div>
+                <div>
+                    <button class="part" num="5">
+                        <span class="partName"></span>
+                        <div class="colorRect">
+                            <span class="colorValues"></span>
+                        </div>
+                    </button>
+                </div>
+                <div>
+                    <button class="part" num="6">
+                        <span class="partName"></span>
+                        <div class="colorRect">
+                            <span class="colorValues"></span>
+                        </div>
+                    </button>
+                </div>
+                
             </div>
 
         </div>

@@ -1,8 +1,11 @@
 :root {
+    --pixelCount: 2;
     /* these will get modified by RoA Custom Colors.js */
+    --portraitWidth: 0px;
+    --spriteWidth: 0px;
+    --extraWidth: 0px;
     --spriteTime: 0s;
     --spriteCount: 0;
-    --spriteMove: 0px;
 }
 
 @font-face {
@@ -21,21 +24,50 @@
 }
 * {
     margin: 0;
-    
 }
 html, body {
     height: 100%;
 }
 html {
-    background: center/512px url(Resources/BG.png);
+    background: center/calc(256px * var(--pixelCount)) url(Resources/BG.png);
     font-family: 'RoA-Bold';
     text-transform: uppercase;
-    font-size: 48px;
+    font-size: calc(24px * var(--pixelCount));
     color: white;
-    /* oh and you thought this was going to be easy */
-    text-shadow: 4px 0px black, 0px 4px black, -4px 0px black, 0px -4px black, 4px 4px black, -4px -4px black, 4px -4px black, -4px 4px black,
-        4px 2px black, 4px -2px black, 2px 4px black, -2px 4px black, -4px 2px black, -4px -2px black, 2px -4px black, -2px -4px black;
+    /* oh and you thought this was going to be simple */
+    text-shadow: calc(2px * var(--pixelCount)) 0px black,
+        0px calc(2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) 0px black,
+        0px calc(-2px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(1px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(-1px * var(--pixelCount)) black,
+        calc(1px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(-1px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(1px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(-1px * var(--pixelCount)) black,
+        calc(1px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black,
+        calc(-1px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black;
     letter-spacing: 1px;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #4a3a80 #170f39; /* Firefox */
+}
+/* all of this is chromium only */
+body::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+body::-webkit-scrollbar-track {
+    background: #170f39;
+  }
+body::-webkit-scrollbar-thumb {
+    background-color: #4a3a80;
+}
+body {
+    overflow-x: hidden;
 }
 button, input {
     outline: none;
@@ -63,17 +95,17 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-image: url('/Resources/TopBG.png') 2 fill / 4px repeat stretch;
-    padding: 0px 60px;
-    height: 128px;
+    border-image: url('/Resources/TopBG.png') 2 fill / calc(2px * var(--pixelCount)) repeat stretch;
+    padding: 0px calc(20px * var(--pixelCount));
+    height: calc(56px * var(--pixelCount));
     background-color: #170f39;
 }
 
 #roaLink {
-    height: 96px;
+    height: calc(42px * var(--pixelCount));
 }
 #roaLinkImg {
-    height: 96px;
+    height: calc(42px * var(--pixelCount));
     filter: invert(1);
     image-rendering: auto;
 }
@@ -82,18 +114,18 @@ button:hover {
 }
 
 .topBut {
-    width: 320px;
-    height: 64px;
+    width: calc(160px * var(--pixelCount));
+    height: calc(32px * var(--pixelCount));
     border-image-slice: 4 6 fill;
-    border-image-width: 8px 12px;
+    border-image-width: calc(4px * var(--pixelCount)) calc(6px * var(--pixelCount));
     line-height: 1.4;
-    margin-left: 64px;
+    margin-left: calc(32px * var(--pixelCount));
 }
 
 #defaultBut {
     border-image-source: url('/Resources/Buttons/Red.png');
 }
-#defaultBut:hover {
+#defaultBut:hover, #defaultBut:focus-visible {
     border-image-source: url('/Resources/Buttons/RedHover.png');
 }
 #defaultBut:active {
@@ -102,7 +134,7 @@ button:hover {
 #colorCodeBut {
     border-image-source: url('/Resources/Buttons/Yellow.png');
 }
-#colorCodeBut:hover {
+#colorCodeBut:hover, #colorCodeBut:focus-visible {
     border-image-source: url('/Resources/Buttons/YellowHover.png');
 }
 #colorCodeBut:active {
@@ -115,7 +147,7 @@ button:hover {
     color: inherit;
     text-decoration: inherit;
 }
-#downloadBut:hover {
+#downloadBut:hover, #downloadBut:focus-visible {
     border-image-source: url('/Resources/Buttons/BlueHover.png');
     cursor: pointer;
 }
@@ -131,90 +163,144 @@ button:hover {
 
 #midLeft {
     display: flex;
-    margin-top: 60px;
+    margin-top: calc(30px * var(--pixelCount));
+    width: 50%;
+    height: calc(340px * var(--pixelCount));
+    justify-content: flex-end;
+    flex-shrink: 0;
 }
 
 #charBackground {
     position: absolute;
-    border-image: url('/Resources/CharBar.png') 2 66 10 2 fill / 4px 132px 20px 4px;
-    width: 1025px;
-    height: 280px;
-    top: 420px;
+    border-image: url('/Resources/CharBar.png') 2 66 10 2 fill
+        / calc(2px * var(--pixelCount)) calc(66px * var(--pixelCount)) calc(10px * var(--pixelCount));
+    width: 53%;
+    height: calc(140px * var(--pixelCount));
+    top: calc(210px * var(--pixelCount));
     z-index: -1;
 }
 
 #pContainer {
-    transform-origin: 0px 0px;
     pointer-events: none;
-    margin-left: 44px;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+#portCanvas {
+    min-width: calc(var(--portraitWidth) * var(--pixelCount));
 }
 
+#eContainer {
+    position: absolute;
+    width: calc(150px * var(--pixelCount));
+    height: calc(150px * var(--pixelCount));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(calc(60px * var(--pixelCount)), calc(-20px * var(--pixelCount)));
+}
+#extraCanvas {
+    min-width: calc(var(--extraWidth) * var(--pixelCount));
+}
+
+#spriteDiv {
+    margin-top: calc(100px * var(--pixelCount));
+    width: calc(150px * var(--pixelCount));
+    height: calc(150px * var(--pixelCount));
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-right: calc(20px  * var(--pixelCount));
+}
 #animDiv {
     overflow: hidden;
-    transform: scale(2);
-    position: absolute;
-    left: 750px;
-    top: 525px;
+    width: calc(var(--spriteWidth) / var(--spriteCount) * var(--pixelCount)); /* gets the w of 1 frame */
 }
 #animCanvas {
-    position: relative;
-    left: 0;
     animation: moveSprite var(--spriteTime) steps(var(--spriteCount)) infinite;
+    min-width: calc(var(--spriteWidth) * var(--pixelCount));
 }
 @keyframes moveSprite {
-    100% { transform: translateX(var(--spriteMove)) }
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-1 * var(--spriteWidth) * var(--pixelCount)));
+    }
 }
 
 
 #midRight {
     display: flex;
     flex-direction: column;
-    margin-right: 40px;
-    margin-top: 36px;
+    margin-top: calc(18px * var(--pixelCount));
+    width: 50%;
 }
 
 #charNameDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-image: url('/Resources/CharName\ BG.png') 4 34 fill / 8px 68px;
-    width: 968px;
-    height: 128px;
+    border-image: url('/Resources/CharName\ BG.png') 4 34 fill / calc(4px * var(--pixelCount)) calc(34px * var(--pixelCount));
+    width: 100%;
+    min-width: calc(350px * var(--pixelCount));
+    max-width: calc(484px * var(--pixelCount));
+    height: calc(64px * var(--pixelCount));
+    transform: translateX(calc(-20px * var(--pixelCount)));
 }
 #backBut, #forwardBut {
-    background: url('/Resources/Buttons/Next.png') no-repeat;
-    width: 98px;
-    height: 68px;
+    background-image: url('/Resources/Buttons/Next.png');
+    background-repeat: no-repeat;
+    background-size: calc(49px * var(--pixelCount)) calc(34px * var(--pixelCount));
+    width: calc(49px * var(--pixelCount));
+    height: calc(34px * var(--pixelCount));
 }
-#backBut:hover, #forwardBut:hover {
-    background: url('/Resources/Buttons/Next\ Pressed.png') no-repeat;
+#backBut:hover, #forwardBut:hover, #backBut:focus-visible, #forwardBut:focus-visible {
+    background-image: url('/Resources/Buttons/Next\ Pressed.png');
 }
 #forwardBut {
     transform: scaleX(-1);
 }
 #charName {
     font-family: 'RoA-Med';
-    font-size: 64px;
-    text-shadow: 4px 0px #170f39, 0px 4px #170f39, -4px 0px #170f39, 0px -4px #170f39, 4px 4px #170f39, -4px -4px #170f39, 4px -4px #170f39, -4px 4px #170f39;
+    font-size: calc(32px * var(--pixelCount));
+    text-shadow: calc(4px * var(--pixelCount)) 0px #170f39,
+        0px calc(4px * var(--pixelCount)) #170f39,
+        calc(-4px * var(--pixelCount)) 0px #170f39,
+        0px calc(-4px * var(--pixelCount)) #170f39,
+        calc(4px * var(--pixelCount)) calc(4px * var(--pixelCount)) #170f39,
+        calc(-4px * var(--pixelCount)) calc(-4px * var(--pixelCount)) #170f39,
+        calc(4px * var(--pixelCount)) calc(-4px * var(--pixelCount)) #170f39,
+        calc(-4px * var(--pixelCount)) calc(4px * var(--pixelCount)) #170f39,
+        calc(4px * var(--pixelCount)) calc(2px * var(--pixelCount)) #170f39,
+        calc(4px * var(--pixelCount)) calc(-2px * var(--pixelCount)) #170f39,
+        calc(2px * var(--pixelCount)) calc(4px * var(--pixelCount)) #170f39,
+        calc(-2px * var(--pixelCount)) calc(4px * var(--pixelCount)) #170f39,
+        calc(-4px * var(--pixelCount)) calc(2px * var(--pixelCount)) #170f39,
+        calc(-4px * var(--pixelCount)) calc(-2px * var(--pixelCount)) #170f39,
+        calc(2px * var(--pixelCount)) calc(-4px * var(--pixelCount)) #170f39,
+        calc(-2px * var(--pixelCount)) calc(-4px * var(--pixelCount)) #170f39;
 }
 
 #partList {
-    padding: 28px 60px 28px 168px;
+    padding: calc(14px * var(--pixelCount)) 0px calc(14px * var(--pixelCount)) calc(60px * var(--pixelCount));
+    max-width: calc(430px * var(--pixelCount));
+    min-width: calc(374px * var(--pixelCount));
+    margin-bottom: calc(90px * var(--pixelCount)); /* this is just so it allows for scroll for bot bar */
+    margin-right: calc(10px * var(--pixelCount));
 }
 .part {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 64px;
-    margin-bottom: 4px;
-    padding: 12px 12px 12px 24px;
+    height: calc(32px * var(--pixelCount));
+    margin-bottom: calc(2px * var(--pixelCount));
+    padding: calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(12px * var(--pixelCount));
     border-image-slice: 4 186 4 6 fill;
-    border-image-width: 8px 372px 8px 12px;
+    border-image-width: calc(4px * var(--pixelCount)) calc(186px * var(--pixelCount)) calc(4px * var(--pixelCount)) calc(6px * var(--pixelCount));
     border-image-source: url('Resources/Parts/PartBG.png');
 }
-.part:hover {
+.part:hover, .part:focus-visible {
     border-image-source: url('Resources/Parts/PartBG\ Hover.png');
 }
 .part:active {
@@ -225,82 +311,82 @@ button:hover {
     border-image-source: url('Resources/Parts/PartBG\ Disabled.png');
 }
 .partName {
-    height: 36px;
+    height: calc(18px * var(--pixelCount));
 }
 .colorRect {
-    width: 366px;
-    height: 40px;
+    width: calc(183px * var(--pixelCount));
+    height: calc(20px * var(--pixelCount));
     z-index: -1;
     display: flex;
     align-items: center;
-    
 }
 .colorValues {
     font-family: 'RoA-Med';
-    font-size: 24px;
+    font-size: calc(12px * var(--pixelCount));
     text-align: right;
     width: 100%;
-    margin-right: 8px;
+    margin-right: calc(4px * var(--pixelCount));
 }
 
 
 #botRegion {
     text-shadow: none;
-    font-size: 32px;
+    font-size: calc(16px * var(--pixelCount));
     position: fixed;
     bottom: 0px;
     right: 0px;
-    border-image: url('/Resources/BotBar\ BG.png') 4 2 2 50 fill / 8px 4px 4px 100px;
-    height: 192px;
+    border-image: url('/Resources/BotBar\ BG.png') 4 2 2 50 fill
+        / calc(4px * var(--pixelCount)) 0 0 calc(50px * var(--pixelCount));
+    height: calc(96px * var(--pixelCount));
     width: 75%;
-    padding: 20px 48px 12px 72px;
+    padding: calc(10px * var(--pixelCount)) calc(24px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(36px * var(--pixelCount));
 }
 
 #sliderRegion {
     display: flex;
     flex-direction: column;
-    padding-left: 116px;
+    padding-left: calc(58px * var(--pixelCount));
 }
 .sliderDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: calc(4px * var(--pixelCount));
 }
 .sliderTextL {
-    width: 86px;
-    height: 24px;
+    width: calc(43px * var(--pixelCount));
+    height: calc(12px * var(--pixelCount));
     flex-shrink: 0;
 }
 .sliderTextR {
-    width: 48px;
-    height: 24px;
+    width: calc(24px * var(--pixelCount));
+    height: calc(12px * var(--pixelCount));
     text-align: right;
     flex-shrink: 0;
 }
 .slider {
     -webkit-appearance: none;
     width: 100%;
-    height: 28px;
+    height: calc(14px * var(--pixelCount));
     outline: none;
     cursor: pointer;
-    border: 4px solid white;
-    margin: 0px 8px;
+    border: calc(2px * var(--pixelCount)) solid white;
+    margin: 0px calc(4px * var(--pixelCount));
 }
 .slider::-webkit-slider-thumb {
     box-sizing: content-box;
     appearance: none;
-    width: 4px;
-    height: 20px;
-    border: 4px solid white;
-    outline: 4px solid black;
+    width: calc(2px * var(--pixelCount));
+    height: calc(10px * var(--pixelCount));
+    border: calc(2px * var(--pixelCount)) solid white;
+    outline: calc(2px * var(--pixelCount)) solid black;
     cursor: pointer;
 }
 .slider::-moz-range-thumb {
-    width: 4px;
-    height: 20px;
-    border: 4px solid white;
-    outline: 4px solid black;
+    width: calc(2px * var(--pixelCount));
+    height: calc(10px * var(--pixelCount));
+    border: calc(2px * var(--pixelCount)) solid white;
+    outline: calc(2px * var(--pixelCount)) solid black;
     border-radius: 0;
     background: none;
     cursor: pointer;
@@ -326,21 +412,21 @@ button:hover {
 #finalColorRegion {
     display: flex;
     align-items: center;
-    margin-top: 6px;
+    margin-top: calc(3px * var(--pixelCount));
 }
 
 #cmSwitcher {
-    padding-right: 38px;
-    height: 44px;
+    padding-right: calc(19px * var(--pixelCount));
+    height: calc(22px * var(--pixelCount));
 }
-#cmSwitcher:hover {
+#cmSwitcher:hover, #cmSwitcher:focus-visible {
     filter: brightness(2);
 }
 
 #imgHSV {
     cursor: pointer;
-    width: 172px;
-    height: 44px;
+    width: calc(86px * var(--pixelCount));
+    height: calc(22px * var(--pixelCount));
 }
 
 #squaresRegion {
@@ -350,36 +436,43 @@ button:hover {
 }
 
 .squareRGB{
-    width: 72px;
-    height: 32px;
-    box-shadow: 4px 0px white, 0px 4px white, -4px 0px white, 0px -4px white;
-    margin: 0px 4px;
+    width: calc(36px * var(--pixelCount));
+    height: calc(16px * var(--pixelCount));
+    box-shadow: calc(2px * var(--pixelCount)) 0px white,
+        0px calc(2px * var(--pixelCount)) white,
+        calc(-2px * var(--pixelCount)) 0px white,
+        0px calc(-2px * var(--pixelCount)) white;
+    margin: 0px calc(2px * var(--pixelCount));
     flex-shrink: 0;
 }
 .plusSign {
-    margin: 0px 8px;
-    width: 24px;
-    height: 24px;
+    margin: 0px calc(4px * var(--pixelCount));
+    width: calc(12px * var(--pixelCount));
+    height: calc(12px * var(--pixelCount));
 }
 #equalsSign {
-    margin: 0px 20px;
-    width: 32px;
-    height: 24px;
+    margin: 0px calc(10px * var(--pixelCount));
+    width: calc(16px * var(--pixelCount));
+    height: calc(12px * var(--pixelCount));
 }
 #squareRGB {
     width: 100%;
-    height: 32px;
-    box-shadow: 4px 0px white, 0px 4px white, -4px 0px white, 0px -4px white;
-    margin: 0px 4px;
+    height: calc(16px * var(--pixelCount));
+    box-shadow: calc(2px * var(--pixelCount)) 0px white,
+        0px calc(2px * var(--pixelCount)) white,
+        calc(-2px * var(--pixelCount)) 0px white,
+        0px calc(-2px * var(--pixelCount)) white;
+    margin: 0px calc(2px * var(--pixelCount));
 }
 
 #emptyRight {
-    width: 72px;
+    width: calc(28px * var(--pixelCount));
+    flex-shrink: 0;
 }
 
 
 #infoRegion {
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -389,30 +482,42 @@ button:hover {
     z-index: 100;
 }
 
+#noWebGL, #loadMessage, #helpMessage {
+    justify-content: center;
+    text-align: center;
+}
+#loadError {
+    display: none;
+}
+.lilInfoText {
+    font-size: calc(16px * var(--pixelCount));
+}
 
 .simpleMessage {
     display: none;
-    padding: 36px;
+    padding: calc(18px * var(--pixelCount));
     background-color: #271d52;
-    box-shadow: 0 0 0 4px #493980, 0 0 0 8px #271d52, 0 0 0 12px black;
-}
-#loadMessage {
-    display: flex;
+    box-shadow: 0 0 0 calc(2px * var(--pixelCount)) #493980,
+        0 0 0 calc(4px * var(--pixelCount)) #271d52,
+        0 0 0 calc(6px * var(--pixelCount)) black;
+    animation: fadeSlideDown .07s ease-out;
+    max-width: 600px;
 }
 #defaultButsRegion {
     display: flex;
     justify-content: space-around;
-    margin-top: 24px;
+    margin-top: calc(12px * var(--pixelCount));
 }
 .genericBut {
-    width: 144px;
-    height: 64px;
+    width: calc(72px * var(--pixelCount));
+    height: calc(32px * var(--pixelCount));
     border-image-source: url('/Resources/Buttons/Generic.png');
     border-image-slice: 6 fill;
-    border-image-width: 12px;
+    border-image-width: calc(6px * var(--pixelCount));
     line-height: 1.4;
+    animation: genericButFade .35s both;
 }
-.genericBut:hover {
+.genericBut:hover, .genericBut:focus-visible {
     border-image-source: url('/Resources/Buttons/GenericHover.png');
 }
 #cancelDefaultBut {
@@ -421,33 +526,39 @@ button:hover {
 #confirmDefaultBut, #confirmDiscardBut {
     color: #55fe71;
 }
+#okHelp {
+    margin-top: calc(16px * var(--pixelCount));
+}
 
 
 #colorCodeRegion {
     font-family: "RoA-Med";
-    width: 620px;
+    width: calc(310px * var(--pixelCount));
     display: none;
+    animation: fadeSlideDown .07s ease-out;
 }
 
 #cCodeTop {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-image: url('/Resources/CCode\ Top.png') 4 4 2 4 fill / 8px 8px 4px 8px;
-    padding: 8px 20px;
+    border-image: url('/Resources/CCode\ Top.png') 4 4 2 4 fill
+        / calc(4px * var(--pixelCount)) calc(4px * var(--pixelCount)) calc(2px * var(--pixelCount)) calc(4px * var(--pixelCount));
+    padding: calc(4px * var(--pixelCount)) calc(10px * var(--pixelCount));
 }
 #cCodeTitle {
-    font-size: 32px;
+    font-size: calc(16px * var(--pixelCount));
     color: #fce800;
 }
 #cCodeError {
-    font-size: 24px;
+    font-size: calc(12px * var(--pixelCount));
     color: #fe555d;
 }
 
 #cCodeBot {
-    border-image: url('/Resources/CCode\ Bot.png') 2 6 6 6 fill / 4px 12px 12px 12px;
-    padding: 16px 20px;
+    border-image: url('/Resources/CCode\ Bot.png') 2 6 6 6 fill
+        / calc(2px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount));
+    padding: calc(8px * var(--pixelCount)) calc(10px * var(--pixelCount));
 }
 #colorCode {
     width: 100%;
@@ -456,26 +567,41 @@ button:hover {
     background: none;
     border: none;
     font-family: "RoA-Med";
-    font-size: 32px;
+    font-size: calc(16px * var(--pixelCount));
     color: white;
     outline: none;
     resize: none;
-    text-shadow: 4px 0px black, 0px 4px black, -4px 0px black, 0px -4px black, 4px 4px black, -4px -4px black, 4px -4px black, -4px 4px black,
-        4px 2px black, 4px -2px black, 2px 4px black, -2px 4px black, -4px 2px black, -4px -2px black, 2px -4px black, -2px -4px black;
+    text-shadow:  calc(2px * var(--pixelCount)) 0px black,
+        0px calc(2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) 0px black,
+        0px calc(-2px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(1px * var(--pixelCount)) black,
+        calc(2px * var(--pixelCount)) calc(-1px * var(--pixelCount)) black,
+        calc(1px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(-1px * var(--pixelCount)) calc(2px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(1px * var(--pixelCount)) black,
+        calc(-2px * var(--pixelCount)) calc(-1px * var(--pixelCount)) black,
+        calc(1px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black,
+        calc(-1px * var(--pixelCount)) calc(-2px * var(--pixelCount)) black;
 }
 
 #cColorButRegion {
     display: flex;
     justify-content: space-around;
-    margin-top: 8px;
+    margin-top: calc(4px * var(--pixelCount));
 }
 .cColorBut {
-    border-image: url('/Resources/Buttons/CCode\ But.png') 6 6 6 6 fill / 12px 12px 12px 12px;
-    padding: 8px 20px;
-    width: 136px;
-    font-size: 24px;
+    border-image: url('/Resources/Buttons/CCode\ But.png') 6 6 6 6 fill
+        / calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount));
+    padding: calc(4px * var(--pixelCount)) calc(10px * var(--pixelCount));
+    width: calc(68px * var(--pixelCount));
+    font-size: calc(12px * var(--pixelCount));
 }
-.cColorBut:hover {
+.cColorBut:hover, .cColorBut:focus-visible {
     filter: brightness(1.5);
 }
 .cColorBut:active {
@@ -498,12 +624,152 @@ button:hover {
     text-align: center;
     display: none;
     animation: copiedAnim 1s ease 1 both;
-    transform: translateY(48px);
+    transform: translateY(calc(24px * var(--pixelCount)));
 }
 
 @keyframes copiedAnim {
-    0%   {transform: translateY(8px); opacity: 0;}
-    10%  {transform: translateY(48px); opacity: 1;}
+    0%   {transform: translateY(calc(4px * var(--pixelCount))); opacity: 0;}
+    10%  {transform: translateY(calc(24px * var(--pixelCount))); opacity: 1;}
     75%  {opacity: 1;}
     100% {opacity: 0;}
+}
+
+
+@keyframes fadeSlideDown {
+    0%   {transform: translateY(calc(80px * var(--pixelCount)));}
+    100% {transform: translateY(0px);}
+}
+
+@keyframes genericButFade {
+    0%   {opacity: 0;}
+    50%  {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+
+@keyframes forwardBut {
+    from {transform: translateX(calc(10px * var(--pixelCount)));}
+    to {transform: translateX(0);}
+}
+@keyframes backBut {
+    from {transform: translateX(calc(-10px * var(--pixelCount)));}
+    to {transform: translateX(0);}
+}
+
+@keyframes backChar {
+    0% {
+        transform: translateX(calc(40px * var(--pixelCount)));
+        opacity: 0;
+        filter: brightness(2);
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+@keyframes forwardChar {
+    0% {
+        transform: translateX(calc(-40px * var(--pixelCount)));
+        opacity: 0;
+        filter: brightness(2);
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+
+@keyframes colPart {
+    from {
+        transform: translateX(calc(300px * var(--pixelCount)));
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes charName {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+
+@media (max-width: 1500px) {
+    
+    :root {
+        --pixelCount: 1.5;
+    }
+
+}
+
+@media (max-width: 1130px) {
+    
+    :root {
+        --pixelCount: 1;
+    }
+
+}
+
+@media (max-width: 750px) {
+
+    #midRegion {
+        flex-direction: column;
+    }
+
+    #midLeft {
+        width: 100%;
+        justify-content: center;
+    }
+    #charBackground {
+        width: 100%;
+        border-image: url('/Resources/CharBar.png') 2 66 10 2 fill
+            / calc(2px * var(--pixelCount)) 0 calc(10px * var(--pixelCount)) 0;
+    }
+
+    #midRight {
+        width: 100%;
+        align-items: center;
+        padding: 0px 10px;
+    }
+    #charNameDiv {
+        min-width: inherit;
+        max-width: 425px;
+        transform: none;
+    }
+    #partList {
+        padding: 14px 10px;
+        max-width: 370px;
+        min-width: 335px;
+        width: 100%;
+    }
+
+    #botRegion {
+        width: 100%;
+        border-image: url('/Resources/BotBar\ BG.png') 4 2 2 50 fill
+            / calc(4px * var(--pixelCount)) 0 0 0;
+        padding: 10px 10px 6px 10px;
+    }
+    #sliderRegion {
+        padding-left: 0;
+    }
+    #cmSwitcher {
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    #spriteDiv {
+        display: none;
+    }
+
+    #charName {
+        font-size: 28px;
+    }
 }

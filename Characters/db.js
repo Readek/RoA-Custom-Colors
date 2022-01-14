@@ -382,7 +382,8 @@ const db = {
             ],
             partNames : ["Mech", "Trim", "Body", "Propellers", "Weapons", "Clothes"],
             idleFC : 7,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000"
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Shovel Knight",

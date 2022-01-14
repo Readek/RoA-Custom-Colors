@@ -12,6 +12,7 @@ const charNameText = document.getElementById("charName");
 
 const fullCanvas = document.getElementById("portCanvas");
 const animCanvas = document.getElementById("animCanvas");
+const extraCanvas = document.getElementById("extraCanvas");
 
 const animDiv = document.getElementById("animDiv");
 
@@ -79,21 +80,118 @@ function createPartList() {
     return returnValue;
 }
 
+// we preload all images so the app can feel as snappy as possible
+const preloadImgs = new Promise((resolve, reject) => {
 
-// when the page loads, change to a random character
-preloadImgs().then( () => {
-    // hide the panel belonging to this button
-    document.getElementById("loadMessage").style.display = "none";
-    // then hide the black background
-    document.getElementById("loadMessage").parentElement.style.display = "none";
-    changeChar();
-});
-   
-changeChar();
+    let charCount = 0;
+    
+    // character imgs
+    for (let i = 0; i < db.chars.length; i++) {
+
+        loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Portrait.png`))
+        db.chars[i].portraitImg = loadedImgs[i+charCount];
+
+        loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Anim.png`))
+        db.chars[i].idleImg = loadedImgs[i+charCount+1];
+
+        if (db.chars[i].extra) {
+            loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Extra.png`));
+            db.chars[i].extraImg = loadedImgs[i+charCount+2];
+            charCount++;
+        }
+
+        charCount++;
+        
+    }
+
+    // everything else
+    loadedImgs.push(newImg("Resources/CCode Bot.png"));
+    loadedImgs.push(newImg("Resources/CCode Top.png"));
+    loadedImgs.push(newImg("Resources/Buttons/BlueHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/BluePress.png"));
+    loadedImgs.push(newImg("Resources/Buttons/CCode But.png"));
+    loadedImgs.push(newImg("Resources/Buttons/GenericHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/Next Pressed.png"));
+    loadedImgs.push(newImg("Resources/Buttons/RedHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/RedPress.png"));
+    loadedImgs.push(newImg("Resources/Buttons/RGB.png"));
+    loadedImgs.push(newImg("Resources/Buttons/YellowHover.png"));
+    loadedImgs.push(newImg("Resources/Buttons/YellowPress.png"));
+    loadedImgs.push(newImg("Resources/Parts/PartBG Hover.png"));
+    loadedImgs.push(newImg("Resources/Parts/PartBG Press.png"));
+    loadedImgs.push(newImg("Resources/Parts/PartBG Disabled.png"));
+
+    // set up loading message
+    document.getElementById("loadImgsTotal").innerText = loadedImgs.length;
+    const loadImgsLeft = document.getElementById("loadImgsLeft");
+
+    const imgPromises = [];
+    let imgCount = 0;
+
+    // for all images to load, decode them
+    for (let i = 0; i < loadedImgs.length; i++) {
+        const imgLoad = new Promise ((resolve, reject) => {
+            loadedImgs[i].decode().then( () => {
+                imgCount++;
+                loadImgsLeft.innerText = imgCount; // if loaded, add to the counter
+                resolve();
+            }).catch(() => {
+                reject(); // in case for any reason something fails to load
+            })
+        })
+        imgPromises.push(imgLoad)
+    }
+
+    // when everything has finished loading
+    Promise.all(imgPromises).then( () => {
+        resolve();
+    }).catch( () => { // if even one image failed to load
+        reject();
+    })
+
+})
+
+
+// first things first, test if the user can run WebGL2
+if (testGL()) {
+
+    // show loading screen
+    displayMessage("loadMessage")
+
+    // when the page loads, preload all images
+    preloadImgs.then( () => {
+        // if loaded, hide loading message
+        document.getElementById("loadMessage").style.display = "none";
+        // then hide the black background
+        document.getElementById("loadMessage").parentElement.style.display = "none";
+        changeChar();
+
+        if (!localStorage.getItem("hideHelp")) {
+            displayMessage("helpMessage")
+        }
+
+    }).catch( () => { // if any image failed to load
+        document.getElementById("loadError").style.display = "inherit";
+    });
+} else {
+    // display an error message
+    displayMessage("noWebGL");
+}
+
+// if the user clicks on the ok button once, don't display again
+document.getElementById("okHelp").addEventListener("click", () => {
+    localStorage.setItem("hideHelp", "y");
+})
 
 // add event listeners to the back and forward character buttons
-document.getElementById("backBut").addEventListener("click", () => {checkNextPrev(true)});
-document.getElementById("forwardBut").addEventListener("click", () => {checkNextPrev()});
+document.getElementById("backBut").addEventListener("click", () => {
+    cssAnimate(document.getElementById("backBut"), "backBut .1s ease-out both");
+    checkNextPrev(true);
+});
+document.getElementById("forwardBut").addEventListener("click", () => {
+    cssAnimate(document.getElementById("forwardBut").parentElement, "forwardBut .1s ease-out both");
+    checkNextPrev()
+});
 document.getElementById("confirmDiscardBut").addEventListener("click", () => {nextPrevChar()})
 function checkNextPrev(dir) {
     direction = dir;
@@ -125,60 +223,72 @@ function changeChar() {
 
     // look at the database to see whats up
     char = db.chars[charNum];
-    // create new character images with this info
+    // create a new recolor character with this info
     characterImgs = new RoaRecolor(char.ogColor, char.colorRange, char.blend);
-    // save all the new images as promises so we know when they are fully loaded
-    const imgPromises = [
-        characterImgs.addImage(fullCanvas, "Characters/"+char.name+"/Portrait.png", "Portrait"),
-        characterImgs.addImage(animCanvas, "Characters/"+char.name+"/Anim.png", "Animated Sprite"),
-    ]
-    // when the images finish loading
-    Promise.all(imgPromises).then( () => {
+    // add in new images to be recolored
+    characterImgs.addImage(fullCanvas, char.portraitImg, "Portrait");
+    characterImgs.addImage(animCanvas, char.idleImg, "Animated Sprite");
+    // if the character has an extra sprite, add it
+    if (char.extra) {
+        extraCanvas.style.display = "inherit";
+        characterImgs.addImage(extraCanvas, char.extraImg, "Extra")
+    } else {
+        extraCanvas.style.display = "none";
+    }
 
-        // dirty trick to scale the character
-        fullCanvas.style.minWidth = fullCanvas.width * 2 + "px";
-        fullCanvas.style.minHeight = fullCanvas.height * 2 + "px";
+    charNameText.innerText = char.name;
 
-        charNameText.innerText = char.name;
+    // ori is the only character that needs an actual recolor
+    if (char.name == "Ori and Sein") {
+        char.currentRGB = [...char.actualColor];
+    } else {
+        char.currentRGB = [...char.ogColor];
+    }
+    // do a first paint 
+    mainRecolor(char.currentRGB);
 
-        // ori is the only character that needs an actual recolor
-        if (char.name == "Ori and Sein") {
-            char.currentRGB = [...char.actualColor];
-        } else {
-            char.currentRGB = [...char.ogColor];
-        }
-        // do a first paint 
-        mainRecolor(char.currentRGB);
+    // create a new color list
+    updateListFull(char.currentRGB);
 
-        // create a new color list
-        updateListFull(char.currentRGB);
+    // set the sliders to the first part by clicking it
+    parts[0].partDiv.click();
 
-        // set the sliders to the first part by clicking it
-        parts[0].partDiv.click();
+    // used to scale the characters with css
+    const r = document.querySelector(':root');
+    r.style.setProperty("--portraitWidth", fullCanvas.width + "px");
+    r.style.setProperty("--spriteWidth", animCanvas.width + "px");
+    r.style.setProperty("--spriteCount", char.idleFC); // frame count
+    // formula for this one is: 1000 is a second, then divided by 60 gets us an
+    // in-game frame, then we multiply by 6 because thats the average frame
+    // wait between sprite changes, and then we multiply by the character frame
+    // count to know how long the animation is going to take, finally, we divide
+    // by 1000 to get the value in seconds for the css variable
+    r.style.setProperty("--spriteTime", 1000/60*6*char.idleFC/1000 + "s");
 
-    })
+    if (char.extra) {
+        r.style.setProperty("--extraWidth", extraCanvas.width + "px");
+    }
 
-    // all of this is for the animated idle sprite
-    const sprite = new Image();
-    sprite.src = "Characters/"+char.name+"/Anim.png";
-    sprite.decode().then( () => { // when the image finishes loading
+    // set the animation for the char switch
+    cssAnimate(charNameText, "charName .1s ease-out both")
+    if (direction) {
+        cssAnimate(document.getElementById("midLeft"), "forwardChar .4s ease-out both");
+    } else {
+        cssAnimate(document.getElementById("midLeft"), "backChar .4s ease-out both");
+    }
 
-        // change the width of the sprite animation, depending on the character
-        animDiv.style.width = (sprite.width / char.idleFC) + "px"; // gets the w of 1 frame
-        animDiv.style.height = sprite.height + "px"; // div will have slightly wrong height otherwise
-        // now change the variables for the sprite animation
-        const r = document.querySelector(':root');
-        r.style.setProperty("--spriteMove", -sprite.width + "px"); //end position of the animation
-        r.style.setProperty("--spriteCount", char.idleFC); // frame count
-        // formula for this one is: 1000 is a second, then divided by 60 gets us an
-        // in-game frame, then we multiply by 6 because thats the average frame
-        // wait between sprite changes, and then we multiply by the character frame
-        // count to know how long the animation is going to take, finally, we divide
-        // by 1000 to get the value in seconds for the css variable
-        r.style.setProperty("--spriteTime", 1000/60*6*char.idleFC/1000 + "s");
-
-    }) 
-
+    // animate color parts
+    let delay = 0;
+    for (let i = parts.length - 1; i > -1; i--) {
+        parts[i].partDiv.parentElement.style.animation = "";
+        parts[i].partDiv.parentElement.style.opacity = 0;
+        setTimeout(() => {
+            parts[i].partDiv.parentElement.style.opacity = 1;
+            cssAnimate(parts[i].partDiv.parentElement, "colPart .05s ease-out both");
+        }, delay);
+        delay += 25;
+    }
+    
 }
 
 //the recolor function!
@@ -598,53 +708,30 @@ function genRnd(min, max) {
 }
 
 
-// we preload all images so the app can feel as snappy as possible
-async function preloadImgs() {
-    
-    // character imgs
-    for (let i = 0; i < db.chars.length; i++) {
-        
-        loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Anim.png`));
-        loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Portrait.png`));
-        if (db.chars[i].extra) {
-            loadedImgs.push(newImg(`Characters/${db.chars[i].name}/Extra.png`));
-        }
-        
+function testGL() {
+    if (!document.createElement("canvas").getContext("webgl2")) {
+        return false;
+    } else {
+        return true;
     }
-
-    // everything else
-    loadedImgs.push(newImg("Resources/CCode Bot.png"));
-    loadedImgs.push(newImg("Resources/CCode Top.png"));
-    loadedImgs.push(newImg("Resources/Buttons/BlueHover.png"));
-    loadedImgs.push(newImg("Resources/Buttons/BluePress.png"));
-    loadedImgs.push(newImg("Resources/Buttons/CCode But.png"));
-    loadedImgs.push(newImg("Resources/Buttons/GenericHover.png"));
-    loadedImgs.push(newImg("Resources/Buttons/Next Pressed.png"));
-    loadedImgs.push(newImg("Resources/Buttons/RedHover.png"));
-    loadedImgs.push(newImg("Resources/Buttons/RedPress.png"));
-    loadedImgs.push(newImg("Resources/Buttons/RGB.png"));
-    loadedImgs.push(newImg("Resources/Buttons/YellowHover.png"));
-    loadedImgs.push(newImg("Resources/Buttons/YellowPress.png"));
-    loadedImgs.push(newImg("Resources/Parts/PartBG Hover.png"));
-    loadedImgs.push(newImg("Resources/Parts/PartBG Press.png"));
-    loadedImgs.push(newImg("Resources/Parts/PartBG Disabled.png"));
-
-    const imgPromises = [];
-
-    for (let i = 0; i < loadedImgs.length; i++) {
-        imgPromises.push(loadedImgs[i].decode())
-    }
-
-    Promise.all(imgPromises).then( () => {
-        return
-    })
-
 }
+
 
 function newImg(url) {
     
-    const img = document.createElement("img");
+    const img = new Image();
     img.src = url;
     return img;
+
+}
+
+
+function cssAnimate(el, aninfo) {
+    
+    el.style.animation = aninfo;
+    el.getAnimations().forEach((anim) => {
+        anim.cancel();
+        anim.play();
+    });
 
 }

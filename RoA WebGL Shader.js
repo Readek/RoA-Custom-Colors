@@ -175,14 +175,6 @@ void main() {
 `;
 
 
-testGL() // test if the user is actually able to do this
-function testGL() {
-  if (!document.createElement("canvas").getContext("webgl2")) {
-    alert("WebGL2 could not be loaded.");
-  }
-}
-
-
 // time to create our recolored character!
 class RoaRecolor {
 
@@ -199,10 +191,8 @@ class RoaRecolor {
   }
 
 
-  async addImage(canvas, imgPath, name) {
-    const skinImg = new Image();
-    skinImg.src = imgPath;  // MUST BE SAME DOMAIN!!!
-    await skinImg.decode(); // wait for the image to be loaded
+  addImage(canvas, img, name) {
+    const skinImg = img;
 
     canvas.width = skinImg.width;
     canvas.height = skinImg.height;
