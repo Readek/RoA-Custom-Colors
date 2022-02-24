@@ -299,7 +299,7 @@ function mainRecolor(rgb, dl) {
     if (char.name == "Olympia") { // Olympia's pants colors affect all whites
         newRGB.push(char.ogColor[24], char.ogColor[25], char.ogColor[26], char.ogColor[27])
     } else if (char.name == "Orcane") { // orcane has a greenish hidden part
-        for (let i = 0; i < 4; i++) { // add the 1st colors as the 3rd colors
+        for (let i = 0; i < 8; i++) { // add the 1st colors as the 3rd colors
             newRGB[i+8] = newRGB[i];
         }
     }

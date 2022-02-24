@@ -39,14 +39,14 @@ const db = {
             ogColor : [
                 59, 73, 135, 1,     // Body
                 205, 247, 247, 1,   // Belly
-                0, 255, 0, 1,       // Highlight (golden skin only)
-                /* 29, 33, 91, 1    // Dark (not sure what this is for?) */
+                0, 255, 0, 1,       // Highlight
+                255, 255, 0, 1      // Highlight Golden
             ],
             colorRange : [
                 18, 30, 40, 1,      // Body
                 22, 30, 65, 1,      // Belly
                 2, 0, 0, 0,         // Highlight
-                /* 3, 0, 0, 0       // Dark */
+                2, 0, 0, 0          // Highlight Golden
             ],
             blend : [
                 1, 1, 1, 1,
@@ -414,22 +414,22 @@ const db = {
         {
             name : "Mollo",
             ogColor : [
-                171, 106, 152, 1,   // PURPLE FUR
-                214, 170, 137, 1,   // TAN FUR
-                107, 31, 31, 1,     // RED CLOTH
-                74, 55, 76, 1,      // SHIRT
-                255, 71, 71, 1,     // BOMBS
-                255, 145, 54, 1,    // EMBERS
-                41, 0, 46, 1        // EYES?
+                175, 96, 136, 1,    // Body
+                244, 212, 173, 1,   // Fluff
+                145, 47, 41, 1,     // Cloth
+                74, 53, 76, 1,      // Wings
+                255, 71, 71, 1,     // Bombs
+                255, 145, 52, 1,    // Embers
+                40, 0, 45, 1        // Eyes
             ],
             colorRange : [
-                7, 5, 15, 1,        // PURPLE FUR
-                8, 19, 13, 1,       // TAN FUR
-                1, 15, 25, 1,       // RED CLOTH
-                3, 22, 16, 1,       // SHIRT
-                4, 17, 40, 1,       // BOMBS
-                22, 14, 46, 1,      // EMBERS
-                2, 36, 27, 1        // EYES?
+                7, 6, 30, 1,        // Body
+                14, 11, 29, 1,      // Fluff
+                4, 14, 34, 1,       // Cloth
+                3, 4, 17, 1,        // Wings
+                13, 5, 42, 1,       // Bombs
+                22, 14, 46, 1,      // Embers
+                2, 36, 27, 1        // Eyes
             ],
             blend : [
                 1, 1, 1, 1,
@@ -440,31 +440,30 @@ const db = {
                 1, 1, 1, 1,
                 1, 1, 1, 1
             ],
-            partNames : ["Purple Fur", "Tan Fur", "Red Cloth", "Shirt", "Bombs", "Embers", "Eyes"],
+            partNames : ["Body", "Fluff", "Cloth", "Wings", "Bombs", "Embers", "Eyes"],
             idleFC : 8,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000-0000"
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Hodan",
             ogColor : [
-                167, 231, 231, 1,   // FX
-                231, 84, 84, 1,     // Skin
-                139, 79, 40, 1,     // Pads
-                64, 64, 255, 1,     // Towel Main
-                255, 255, 128, 1,   // Towel Strip
-                242, 249, 251, 1,   // Fur 1
-                192, 219, 255, 1,   // Fur 2
-                161, 181, 255, 1    // Fur 3
+                136, 231, 255, 1,   // Steam
+                231, 84, 84, 1,     // Body
+                139, 79, 40, 1,     // Hands
+                82, 82, 235, 1,     // Towel
+                255, 220, 66, 1,    // Towel Stripe
+                253, 253, 253, 1,   // Fur 1
+                201, 220, 231, 1,   // Fur 2
             ],
             colorRange : [
-                18, 21, 52, 1,      // FX
-                1, 37, 23, 1,       // Skin
-                33, 19, 14, 1,      // Pads
-                1, 27, 26, 1,       // Towel Main
-                1, 1, 1, 1,         // Towel Strip
-                1, 1, 1, 1,         // Fur 1
-                0, 0, 0, 1,         // Fur 2
-                0, 0, 0, 1          // Fur 3
+                11, 32, 10, 1,      // Steam
+                1, 23, 13, 1,       // Body
+                5, 9, 31, 1,        // Hands
+                5, 15, 32, 1,       // Towel
+                23, 7, 5, 1,        // Towel Stripe
+                0, 0, 0, 1,         // Fur 1
+                16, 29, 8, 1,       // Fur 2
             ],
             blend : [
                 1, 1, 1, 1,
@@ -476,27 +475,29 @@ const db = {
                 1, 1, 1, 1,
                 1, 1, 1, 1
             ],
-            partNames : ["FX", "Skin", "Pads", "Towel 1", "Towel 2", "Fur 1", "Fur 2", "Fur 3"],
+            partNames : ["Steam", "Body", "Hands", "Towel", "T. Stripe", "Fur 1", "Fur 2"],
             idleFC : 8,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000-0000-0000-0000"
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Pomme",
             ogColor : [
                 233, 190, 224, 1,   // Skin
-                99, 41, 76, 1,      // Jacket
-                35, 13, 64, 1,      // Outfit
-                116, 16, 80, 1,     // Eye
-                85, 22, 98, 1,      // Hair
-                224, 90, 199, 1     // Music
+                167, 83, 132, 1,    // Jacket
+                103, 49, 137, 1,    // Clothes
+                177, 47, 102, 1,    // Eyes
+                183, 101, 184, 1,   // Hair
+                219, 74, 195, 1     // Music
+                
             ],
             colorRange : [
-                13, 32, 52, 1,      // Skin
-                2, 10, 27, 1,       // Jacket
-                12, 10, 12, 1,      // Outfit
-                14, 14, 25, 1,      // Eye
-                10, 34, 35, 1,      // Hair
-                8, 30, 26, 1        // Music
+                14, 21, 37, 1,      // Skin
+                5, 14, 37, 1,       // Jacket
+                12, 16, 29, 1,      // Clothes
+                0, 0, 0, 1,         // Eyes
+                11, 13, 33, 1,      // Hair
+                5, 5, 11, 1         // Music
             ],
             blend : [
                 1, 1, 1, 1,
@@ -507,29 +508,30 @@ const db = {
                 1, 1, 1, 1,
             ],
             /* some colors are missing compared to the actual colors.gml */
-            partNames : ["Skin", "Jacket", "Outfit", "Eye", "Hair", "Music"],
+            partNames : ["Skin", "Jacket", "Clothes", "Eyes", "Hair", "Music"],
             idleFC : 12,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000"
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         },
         {
             name : "Olympia",
             ogColor : [
-                236, 141, 202, 1,   // Crystal Light
-                161, 26, 113, 1,    // Crystal Dark
-                166, 115, 75, 1,    // Fur
-                228, 133, 116, 1,   // Skin???
-                213, 207, 215, 1,   // Pant
-                54, 123, 141, 1,    // Eye
-                255, 249, 249, 1,   // White
+                236, 141, 202, 1,   // Right Crystal
+                141, 236, 175, 1,   // Left Crystal
+                184, 128, 83, 1,    // Body
+                228, 133, 116, 1,   // Tail
+                247, 243, 249, 1,   // Pants
+                255, 249, 249, 1,   // Shine
+                54, 123, 141, 1,    // Eyes
             ],
             colorRange : [
-                1, 1, 1, 1,         // Crystal Light
-                1, 1, 1, 1,         // Crystal Dark
-                12, 13, 10, 1,      // Fur
-                6, 4, 29, 1,        // Skin???
-                9, 5, 18, 1,        // Pant
-                2, 6, 5, 1,         // Eye
-                1, 1, 1, 1,         // White
+                2, 46, 31, 1,       // Crystal Light
+                2, 46, 31, 1,       // Crystal Dark
+                13, 15, 36, 1,      // Bodys
+                5, 2, 25, 1,        // Tail
+                7, 7, 32, 1,        // Pants
+                0, 4, 0, 1,         // Shine
+                2, 14, 15, 1,       // Eyes
             ],
             blend : [
                 1, 1, 1, 1,
@@ -540,10 +542,10 @@ const db = {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
             ],
-            partNames : ["Crystal L", "Crystal D", "Fur", "Skin", "Pants", "Eyes"],
+            partNames : ["R. Crystal", "L. Crystal", "Body", "Tail", "Pants", "Shine", "Eyes"],
             idleFC : 10,
-            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000",
-            actualParts : 6
+            placeholder : "0000-0000-0000-0000-0000-0000-0000-0000-0000-0000-0000",
+            extra : true
         }
 
     ]
