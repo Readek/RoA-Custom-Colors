@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div id="helpMessage" class="simpleMessage">
+        <div id="helpMessage" class="simpleMessage" tabindex="1">
 
             <p>Welcome!</p>
 
@@ -48,7 +48,7 @@
 
         </div>
 
-        <div id="undoMessage" class="simpleMessage">
+        <div id="undoMessage" class="simpleMessage" tabindex="1">
 
             <p>UNDO ALL CHANGES?</p>
 
@@ -59,7 +59,7 @@
 
         </div>
 
-        <div id="discardMessage" class="simpleMessage">
+        <div id="discardMessage" class="simpleMessage" tabindex="1">
 
             <p>DISCARD CHANGES?</p>
 
@@ -78,7 +78,7 @@
             </div>
 
             <div id="cCodeBot">
-                <textarea id="colorCode" placeholder="Type your color code here"></textarea>
+                <textarea id="colorCode" placeholder="Type your color code here" spellcheck="false"></textarea>
             </div>
 
             <div id="cColorButRegion">
@@ -99,9 +99,18 @@
             <img src="Resources/Logo.png" alt="RoA link image" id="roaLinkImg">
         </a>
         <div>
-            <button id="defaultBut" class="topBut" title="Reset current skin to the default one">DEFAULT</button>
-            <button id="colorCodeBut" class="topBut" title="Get a color code to be used ingame">COLOR CODE</button>
-            <a id="downloadBut" class="topBut" title="Downloads current portrait">GET IMAGE</a>
+            <button id="defaultBut" class="topBut" title="Reset current skin to the default one" disabled>
+                <img class="topButIcon" src="Resources/Buttons/Undo Icon.png" alt="Undo Icon">
+                <span class="topButText" id="defaultButText">DEFAULT</span>
+            </button>
+            <button id="colorCodeBut" class="topBut" title="Get a color code to be used ingame">
+                <img class="topButIcon" src="Resources/Buttons/Code Icon.png" alt="Color Code Icon">
+                <span class="topButText">COLOR CODE</span>
+            </button>
+            <a id="downloadBut" class="topBut" title="Downloads current portrait" tabindex="0">
+                <img class="topButIcon" src="Resources/Buttons/Save Icon.png" alt="Color Code Icon">
+                <span class="topButText">GET IMAGE</span>
+            </a>
         </div>
     </div>
 

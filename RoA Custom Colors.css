@@ -121,6 +121,16 @@ button:hover {
     line-height: 1.4;
     margin-left: calc(32px * var(--pixelCount));
 }
+.topBut:disabled {
+    filter: saturate(0);
+    pointer-events: none;
+}
+.topButIcon {
+    display: none;
+    width: calc(28px * var(--pixelCount));
+    height: calc(24px * var(--pixelCount));
+    transform: translateY(calc(4px * var(--pixelCount)));
+}
 
 #defaultBut {
     border-image-source: url('/Resources/Buttons/Red.png');
@@ -146,6 +156,7 @@ button:hover {
     text-align: center;
     color: inherit;
     text-decoration: inherit;
+    outline: none;
 }
 #downloadBut:hover, #downloadBut:focus-visible {
     border-image-source: url('/Resources/Buttons/BlueHover.png');
@@ -391,6 +402,9 @@ button:hover {
     background: none;
     cursor: pointer;
 }
+.slider:focus-visible {
+    outline: calc(2px * var(--pixelCount)) solid red;
+}
 #sliderHue {
     background: linear-gradient(to right, red, #ff0, lime, cyan, blue, #f0f, red);
 }
@@ -502,6 +516,7 @@ button:hover {
         0 0 0 calc(6px * var(--pixelCount)) black;
     animation: fadeSlideDown .07s ease-out;
     max-width: 600px;
+    outline: none;
 }
 #defaultButsRegion {
     display: flex;
@@ -761,6 +776,24 @@ button:hover {
     #cmSwitcher {
         padding-right: 10px;
     }
+}
+
+@media (max-width: 700px) {
+
+    .topBut {
+        width: calc(34px * var(--pixelCount));
+        margin-left: calc(12px * var(--pixelCount));
+    }
+    .topButText {
+        display: none;
+    }
+    .topButIcon {
+        display: inherit;
+    }
+    #downloadBut {
+        margin-left: 17px;
+    }
+
 }
 
 @media (max-width: 450px) {

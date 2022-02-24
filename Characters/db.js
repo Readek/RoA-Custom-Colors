@@ -401,7 +401,8 @@ const db = {
                 26, 91, 1, 1,       // Trim
                 18, 42, 37, 1,      // Horns
                 /* 0, 0, 0, 1       // CSS Highlight */
-            ],blend : [
+            ],
+            blend : [
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 1, 1, 1,
@@ -532,6 +533,15 @@ const db = {
                 7, 7, 32, 1,        // Pants
                 0, 4, 0, 1,         // Shine
                 2, 14, 15, 1,       // Eyes
+            ],
+            actualColor : [
+                236, 141, 202, 1,   // Right Crystal
+                236, 141, 202, 1,   // Left Crystal
+                184, 128, 83, 1,    // Body
+                228, 133, 116, 1,   // Tail
+                247, 243, 249, 1,   // Pants
+                255, 249, 249, 1,   // Shine
+                54, 123, 141, 1,    // Eyes
             ],
             blend : [
                 1, 1, 1, 1,

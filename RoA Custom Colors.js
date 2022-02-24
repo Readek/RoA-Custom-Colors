@@ -5,6 +5,7 @@ let characterImgs; // this will hold a class from "RoA WebGL Shader.js"
 let charNum = 0;
 let rgbSliders; // if active, the page will use rgb sliders instead of hsv ones
 let direction; // will tell which animations to play when switching chars
+let defaultBool; // simple bool to enable default button
 
 const codeReg = "^([A-Fa-f0-9]+\-)+([A-Fa-f0-9])+$";
 
@@ -167,7 +168,7 @@ if (testGL()) {
         changeChar();
 
         if (!localStorage.getItem("hideHelp")) {
-            displayMessage("helpMessage")
+            displayMessage("helpMessage");
         }
 
     }).catch( () => { // if any image failed to load
@@ -239,7 +240,7 @@ function changeChar() {
     charNameText.innerText = char.name;
 
     // ori is the only character that needs an actual recolor
-    if (char.name == "Ori and Sein") {
+    if (char.actualColor) {
         char.currentRGB = [...char.actualColor];
     } else {
         char.currentRGB = [...char.ogColor];
@@ -288,6 +289,8 @@ function changeChar() {
         }, delay);
         delay += 25;
     }
+
+    disableDefaultButton();
     
 }
 
@@ -411,6 +414,12 @@ function sliderMoved() {
     squareB.style.backgroundColor = `rgb(0, 0, ${rgb[num*4+2]})`;
     squareRGB.style.backgroundColor = `rgb(${rgb[num*4]}, ${rgb[num*4+1]}, ${rgb[num*4+2]})`;
 
+    if (!defaultBool) {
+        document.getElementById("defaultButText").innerText = "UNDO CHANGES";
+        document.getElementById("defaultBut").disabled = false;
+        defaultBool = true;
+    }
+
 }
 
 
@@ -440,7 +449,7 @@ document.getElementById("defaultBut").addEventListener("click", () => {
 document.getElementById("confirmDefaultBut").addEventListener("click", () => {
     
     // set the colors to default
-    if (char.name == "Ori and Sein") {
+    if (char.actualColor) {
         char.currentRGB = [...char.actualColor];
     } else {
         char.currentRGB = [...char.ogColor];
@@ -455,12 +464,20 @@ document.getElementById("confirmDefaultBut").addEventListener("click", () => {
     // set the sliders to the first part by clicking it
     parts[char.currentPart].partDiv.click();
 
+    disableDefaultButton();
+
 });
+function disableDefaultButton() {
+    document.getElementById("defaultButText").innerText = "DEFAULT";
+    document.getElementById("defaultBut").disabled = true;
+    defaultBool = false;
+}
 
 // color code button
 document.getElementById("colorCodeBut").addEventListener("click", () => {
     genColorCode();
     displayMessage("colorCodeRegion");
+    colorCode.focus();
 });
 function genColorCode() {
     // code modified from https://github.com/ErrorThreeOThree/ROAColorCodeBot
@@ -588,6 +605,7 @@ cCodeButApply.addEventListener("click", () => {
 function displayMessage(messageID) {
     document.getElementById("infoRegion").style.display = "flex";
     document.getElementById(messageID).style.display = "block";
+    document.getElementById(messageID).focus();
 }
 
 
