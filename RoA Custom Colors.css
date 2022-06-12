@@ -321,11 +321,19 @@ button:hover {
     cursor: auto;
     border-image-source: url('Resources/Parts/PartBG\ Disabled.png');
 }
+.partRight {
+    display: flex;
+}
 .partName {
     height: calc(18px * var(--pixelCount));
 }
+.ogColorRect {
+    width: calc(20px * var(--pixelCount));
+    height: calc(20px * var(--pixelCount));
+    z-index: -1;
+}
 .colorRect {
-    width: calc(183px * var(--pixelCount));
+    width: calc(160px * var(--pixelCount));
     height: calc(20px * var(--pixelCount));
     z-index: -1;
     display: flex;

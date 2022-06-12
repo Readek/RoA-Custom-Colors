@@ -45,6 +45,7 @@ class charPart {
     constructor(partDiv) {
         this.partName = partDiv.querySelector(".partName");
         this.colorRect = partDiv.querySelector(".colorRect");
+        this.colorRectOg = partDiv.querySelector(".ogColorRect");
         this.colorValues = partDiv.querySelector(".colorValues");
 
         this.partDiv = partDiv;
@@ -56,6 +57,7 @@ class charPart {
         this.partName.innerText = name;
         this.newColor(rgb);
         this.partDiv.disabled = false;
+        this.colorRectOg.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     }
 
     newColor(rgb) {
@@ -299,9 +301,7 @@ function mainRecolor(rgb, dl) {
 
     const newRGB = [...rgb];
 
-    if (char.name == "Olympia") { // Olympia's pants colors affect all whites
-        newRGB.push(char.ogColor[24], char.ogColor[25], char.ogColor[26], char.ogColor[27])
-    } else if (char.name == "Orcane") { // orcane has a greenish hidden part
+    if (char.name == "Orcane") { // orcane has a greenish hidden part
         for (let i = 0; i < 8; i++) { // add the 1st colors as the 3rd colors
             newRGB[i+8] = newRGB[i];
         }
@@ -316,10 +316,14 @@ function mainRecolor(rgb, dl) {
 }
 
 // called when changing character
-function updateListFull(rgb) {
+function updateListFull(rgb, notNew) {
     for (let i = 0; i < parts.length; i++) {
         if (i < char.partNames.length) {
-            parts[i].newPart([rgb[i*4], rgb[i*4+1], rgb[i*4+2]], char.partNames[i]);
+            if (notNew) {
+                parts[i].newColor([rgb[i*4], rgb[i*4+1], rgb[i*4+2]]);
+            } else {
+                parts[i].newPart([rgb[i*4], rgb[i*4+1], rgb[i*4+2]], char.partNames[i]);
+            }
         } else {
             parts[i].disable();
         }        
@@ -459,7 +463,7 @@ document.getElementById("confirmDefaultBut").addEventListener("click", () => {
     mainRecolor(char.currentRGB);
 
     // update all values
-    updateListFull(char.currentRGB);
+    updateListFull(char.currentRGB, true);
 
     // set the sliders to the first part by clicking it
     parts[char.currentPart].partDiv.click();
@@ -581,11 +585,6 @@ cCodeButApply.addEventListener("click", () => {
 
     rgb.splice(rgb.length - 4); //remove the checksum at the end of the code
 
-    // Olympia needs some special treatment since the pants colors affect all whites
-    if (char.name == "Olympia") {
-        rgb.push(char.ogColor[24], char.ogColor[25], char.ogColor[26], char.ogColor[27])
-    }
-
     if (char.name == "Orcane") { // orcane has a greenish hidden part
         for (let i = 0; i < 4; i++) { // add the 1st colors as the 3rd colors
             rgb[i+8] = rgb[i];
@@ -595,8 +594,12 @@ cCodeButApply.addEventListener("click", () => {
     char.currentRGB = rgb;
 
     mainRecolor(char.currentRGB);
-    updateListFull(char.currentRGB);
+    updateListFull(char.currentRGB, true);
     parts[0].partDiv.click();
+
+    document.getElementById("defaultButText").innerText = "UNDO CHANGES";
+    document.getElementById("defaultBut").disabled = false;
+    defaultBool = true;
 
 })
 
