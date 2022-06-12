@@ -95,7 +95,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-image: url('/Resources/TopBG.png') 2 fill / calc(2px * var(--pixelCount)) repeat stretch;
+    border-image: url('Resources/TopBG.png') 2 fill / calc(2px * var(--pixelCount)) repeat stretch;
     padding: 0px calc(20px * var(--pixelCount));
     height: calc(56px * var(--pixelCount));
     background-color: #170f39;
@@ -133,25 +133,25 @@ button:hover {
 }
 
 #defaultBut {
-    border-image-source: url('/Resources/Buttons/Red.png');
+    border-image-source: url('Resources/Buttons/Red.png');
 }
 #defaultBut:hover, #defaultBut:focus-visible {
-    border-image-source: url('/Resources/Buttons/RedHover.png');
+    border-image-source: url('Resources/Buttons/RedHover.png');
 }
 #defaultBut:active {
-    border-image-source: url('/Resources/Buttons/RedPress.png');
+    border-image-source: url('Resources/Buttons/RedPress.png');
 }
 #colorCodeBut {
-    border-image-source: url('/Resources/Buttons/Yellow.png');
+    border-image-source: url('Resources/Buttons/Yellow.png');
 }
 #colorCodeBut:hover, #colorCodeBut:focus-visible {
-    border-image-source: url('/Resources/Buttons/YellowHover.png');
+    border-image-source: url('Resources/Buttons/YellowHover.png');
 }
 #colorCodeBut:active {
-    border-image-source: url('/Resources/Buttons/YellowPress.png');
+    border-image-source: url('Resources/Buttons/YellowPress.png');
 }
 #downloadBut {
-    border-image-source: url('/Resources/Buttons/Blue.png');
+    border-image-source: url('Resources/Buttons/Blue.png');
     float: right;
     text-align: center;
     color: inherit;
@@ -159,11 +159,11 @@ button:hover {
     outline: none;
 }
 #downloadBut:hover, #downloadBut:focus-visible {
-    border-image-source: url('/Resources/Buttons/BlueHover.png');
+    border-image-source: url('Resources/Buttons/BlueHover.png');
     cursor: pointer;
 }
 #downloadBut:active {
-    border-image-source: url('/Resources/Buttons/BluePress.png');
+    border-image-source: url('Resources/Buttons/BluePress.png');
 }
 
 
@@ -183,7 +183,7 @@ button:hover {
 
 #charBackground {
     position: absolute;
-    border-image: url('/Resources/CharBar.png') 2 66 10 2 fill
+    border-image: url('Resources/CharBar.png') 2 66 10 2 fill
         / calc(2px * var(--pixelCount)) calc(66px * var(--pixelCount)) calc(10px * var(--pixelCount));
     width: 53%;
     height: calc(140px * var(--pixelCount));
@@ -251,7 +251,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-image: url('/Resources/CharName\ BG.png') 4 34 fill / calc(4px * var(--pixelCount)) calc(34px * var(--pixelCount));
+    border-image: url('Resources/CharName\ BG.png') 4 34 fill / calc(4px * var(--pixelCount)) calc(34px * var(--pixelCount));
     width: 100%;
     min-width: calc(350px * var(--pixelCount));
     max-width: calc(484px * var(--pixelCount));
@@ -259,14 +259,14 @@ button:hover {
     transform: translateX(calc(-20px * var(--pixelCount)));
 }
 #backBut, #forwardBut {
-    background-image: url('/Resources/Buttons/Next.png');
+    background-image: url('Resources/Buttons/Next.png');
     background-repeat: no-repeat;
     background-size: calc(49px * var(--pixelCount)) calc(34px * var(--pixelCount));
     width: calc(49px * var(--pixelCount));
     height: calc(34px * var(--pixelCount));
 }
 #backBut:hover, #forwardBut:hover, #backBut:focus-visible, #forwardBut:focus-visible {
-    background-image: url('/Resources/Buttons/Next\ Pressed.png');
+    background-image: url('Resources/Buttons/Next\ Pressed.png');
 }
 #forwardBut {
     transform: scaleX(-1);
@@ -354,7 +354,7 @@ button:hover {
     position: fixed;
     bottom: 0px;
     right: 0px;
-    border-image: url('/Resources/BotBar\ BG.png') 4 2 2 50 fill
+    border-image: url('Resources/BotBar\ BG.png') 4 2 2 50 fill
         / calc(4px * var(--pixelCount)) 0 0 calc(50px * var(--pixelCount));
     height: calc(96px * var(--pixelCount));
     width: 75%;
@@ -534,14 +534,14 @@ button:hover {
 .genericBut {
     width: calc(72px * var(--pixelCount));
     height: calc(32px * var(--pixelCount));
-    border-image-source: url('/Resources/Buttons/Generic.png');
+    border-image-source: url('Resources/Buttons/Generic.png');
     border-image-slice: 6 fill;
     border-image-width: calc(6px * var(--pixelCount));
     line-height: 1.4;
     animation: genericButFade .35s both;
 }
 .genericBut:hover, .genericBut:focus-visible {
-    border-image-source: url('/Resources/Buttons/GenericHover.png');
+    border-image-source: url('Resources/Buttons/GenericHover.png');
 }
 #cancelDefaultBut {
     color: #fe555d;
@@ -565,7 +565,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-image: url('/Resources/CCode\ Top.png') 4 4 2 4 fill
+    border-image: url('Resources/CCode\ Top.png') 4 4 2 4 fill
         / calc(4px * var(--pixelCount)) calc(4px * var(--pixelCount)) calc(2px * var(--pixelCount)) calc(4px * var(--pixelCount));
     padding: calc(4px * var(--pixelCount)) calc(10px * var(--pixelCount));
 }
@@ -579,7 +579,7 @@ button:hover {
 }
 
 #cCodeBot {
-    border-image: url('/Resources/CCode\ Bot.png') 2 6 6 6 fill
+    border-image: url('Resources/CCode\ Bot.png') 2 6 6 6 fill
         / calc(2px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount));
     padding: calc(8px * var(--pixelCount)) calc(10px * var(--pixelCount));
 }
@@ -618,7 +618,7 @@ button:hover {
     margin-top: calc(4px * var(--pixelCount));
 }
 .cColorBut {
-    border-image: url('/Resources/Buttons/CCode\ But.png') 6 6 6 6 fill
+    border-image: url('Resources/Buttons/CCode\ But.png') 6 6 6 6 fill
         / calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount)) calc(6px * var(--pixelCount));
     padding: calc(4px * var(--pixelCount)) calc(10px * var(--pixelCount));
     width: calc(68px * var(--pixelCount));
@@ -751,7 +751,7 @@ button:hover {
     }
     #charBackground {
         width: 100%;
-        border-image: url('/Resources/CharBar.png') 2 66 10 2 fill
+        border-image: url('Resources/CharBar.png') 2 66 10 2 fill
             / calc(2px * var(--pixelCount)) 0 calc(10px * var(--pixelCount)) 0;
     }
 
@@ -774,7 +774,7 @@ button:hover {
 
     #botRegion {
         width: 100%;
-        border-image: url('/Resources/BotBar\ BG.png') 4 2 2 50 fill
+        border-image: url('Resources/BotBar\ BG.png') 4 2 2 50 fill
             / calc(4px * var(--pixelCount)) 0 0 0;
         padding: 10px 10px 6px 10px;
     }
