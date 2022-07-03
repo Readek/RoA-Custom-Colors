@@ -277,7 +277,7 @@ function changeChar() {
     if (direction) {
         cssAnimate(document.getElementById("midLeft"), "forwardChar .4s ease-out both");
     } else {
-        cssAnimate(document.getElementById("midLeft"), "backChar .4s ease-out both");
+        cssAnimate(document.getElementById("midLeft"), "forwardChar .4s ease-out both"); // TODO fix direction
     }
 
     // animate color parts
